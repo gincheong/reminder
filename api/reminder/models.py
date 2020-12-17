@@ -22,4 +22,3 @@ class Task(BaseModel):
     task_date = models.DateTimeField()
     # TODO Improvement, 알람 기능 복잡화(몇 분, 하루 전 알람)하려면 Boolean만 쓰면 안 됨
     alarm = models.BooleanField()
-
