@@ -1,1 +1,1 @@
-export { fetchTask, FETCH_TASK } from './Task';
+export { fetchAllTask, fetchOneTask, FETCH_ALL_TASK, FETCH_ONE_TASK } from './Task';
