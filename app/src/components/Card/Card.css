@@ -1,7 +1,48 @@
-.TaskCard {
-  border: 1px solid black;
+.task-card {
+  border-radius: 1.5em;
+  box-shadow: 0.2em 0.2em 0.4em black;
+  /* x, y, blur, color */
   margin: 1em;
+  padding: 0.5em;
 
-  background-color: #cee5d5;
-  
+  background-color: #567ace;
+  text-align: left;
+}
+
+.task-card-header {
+  cursor: pointer;
+  border: 0.8em solid #567ace;
+
+  color: #f2f2f2;
+  transition: color 0.3s ease-out;
+}
+.task-card-header:hover {
+  color: #000000;
+  transition: color 0.3s ease-out;
+}
+
+.task-title {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.task-description {
+  font-size: 0.9em;
+  color: #cee5d5;
+}
+
+.toggle {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.task-detail {
+  padding: 0.8em;
+}
+
+.task-date {
+}
+
+.task-datepicker {
 }

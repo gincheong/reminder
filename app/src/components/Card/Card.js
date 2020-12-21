@@ -5,13 +5,6 @@ import { fetchAllTask, fetchOneTask } from '../../actions';
 import './Card.css';
 
 class Card extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      expandedCard : 0
-    }
-  }
-
   componentDidMount () {
     // DOM이 갖춰지고 나서 실행되어야 할 초기화문을 보통 여기서 한다
     this.props.fetchAllTask();
@@ -20,55 +13,64 @@ class Card extends Component {
   componentDidUpdate () {
     // state나 props이 바뀌어 컴포넌트가 갱신될 때 실행될 부분
     console.log("Props", this.props);
-    console.log("State", this.state)
+    console.log("State", this.state);
   }
 
   render () {
     return (
-      <div className="Card">
+      <div className="card">
         {this.renderCard()}
       </div>
     );
   }
 
   renderCard () {
-    const { taskList } = this.props.task.task;
-    const { expandedCard } = this.state;
+    const { taskList } = this.props.Card.taskReducer;
     
-    return taskList.map((each, index) => {
+    return taskList.map((each) => {
+      const date = each.task_date.substr(0, 10);
+      console.log(each.alarm);
       return (
-        <div key={index} className="TaskCard" onClick={() => this.expandCard(each.id)}>
-          <div className="TaskTitle">
-            {each.title}
-          </div>
-          <div className="TaskDescription">
-            {each.description}
-          </div>
-          {each.id === expandedCard ? (
-            <div className="TaskDetail">
-              {each.task_date}, {each.alarm}
+        <div key={each.id} className="task-card">
+          <div className="task-card-header" onClick={(event) => this.toggleCard(event)}>
+            <div className="task-title">
+              {each.title}
             </div>
-          ) : null}
+            <div className="task-description">
+              {each.description}
+            </div>
+          </div>
+          {/* Toggle Content */}
+          <div className="toggle">
+            <hr />
+            <div className="task-detail">
+              <div className="task-date">
+                <input className="task-datepicker" type="date" defaultValue={date} />
+              </div>
+              <div className="task-alarm">
+                {each.alarm ? "True" : "False" }
+              </div>
+            </div>
+          </div>
         </div>
       )
     });
   }
 
-  expandCard (id) {
-    const { expandedCard } = this.state;
-    if (expandedCard === id) {
-      id = 0;
+  toggleCard (event) {
+    const element = event.currentTarget.parentElement.querySelector('.toggle')
+    if (element.style.maxHeight) {
+      element.style.maxHeight = null;
+    } else {
+      element.style.maxHeight = element.scrollHeight + "px";
     }
-    this.setState({
-      expandedCard : id
-    });
   }
 
 }
 
 let mapStateToProps = (state) => {
   return {
-    task: state
+    Card: state
   }
 }
 
