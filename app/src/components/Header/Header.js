@@ -5,10 +5,10 @@ import './Header.css';
 class Header extends Component {
   render () {
     return (
-      <div className="Header">
-        <h3>
-          This is Header
-        </h3>
+      <div className="header">
+        <h1>
+          Reminder
+        </h1>
       </div>
     )
   }
