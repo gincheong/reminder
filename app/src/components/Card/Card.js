@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchAllTask, fetchOneTask } from '../../actions';
+import { Button } from '../';
 import './Card.css';
 
 class Card extends Component {
@@ -29,7 +30,6 @@ class Card extends Component {
     
     return taskList.map((each) => {
       const date = each.task_date.substr(0, 10);
-      console.log(each.alarm);
       return (
         <div key={each.id} className="task-card">
           <div className="task-card-header" onClick={(event) => this.toggleCard(event)}>
@@ -50,11 +50,19 @@ class Card extends Component {
               <div className="task-alarm">
                 {each.alarm ? "True" : "False" }
               </div>
+              <>
+                <Button event={this.test} name="Edit" />
+                <Button event={this.test} name="Delete" />
+              </>
             </div>
           </div>
         </div>
       )
     });
+  }
+
+  test (event) {
+    console.log(event);
   }
 
   toggleCard (event) {
