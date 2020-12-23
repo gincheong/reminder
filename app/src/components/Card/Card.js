@@ -15,21 +15,24 @@ class Card extends Component {
   }
 
   componentDidMount () {
-    // DOM이 갖춰지고 나서 실행되어야 할 초기화문을 보통 여기서 한다
+    // * DOM이 갖춰지고 나서 실행되어야 할 초기화문을 보통 여기서 한다
     this.props.fetchAllTask();
   }
 
-  // DEBUG : Should be deleted in Distribution
+  // ! Should be deleted in Distribution, function do nothing
   componentDidUpdate () {
-    // state나 props이 바뀌어 컴포넌트가 갱신될 때 실행될 부분
+    // * state나 props이 바뀌어 컴포넌트가 갱신될 때 실행될 부분
   }
 
   render () {
     return (
-      <div>
-        {this.renderCard()}
+      // ! className 'card' conflict with bootstrap 
+      <>
+        <div> 
+          {this.renderCard()}
+        </div> 
         <CardModal id={this.state.selected_card_id} close={this.toggleModal} />
-      </div>
+      </>
     );
   }
 

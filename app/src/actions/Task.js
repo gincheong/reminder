@@ -7,7 +7,8 @@ export const FETCH_ONE_TASK = 'FETCH_ONE_TASK';
 
 export function fetchAllTask () {
   return dispatch => {
-    // dispatch(waiting)
+    // TODO : add more type
+    //  dispatch(waiting)
     axios.get(TASK_URL)
       .then(response => {
         dispatch({
