@@ -5,6 +5,7 @@ import { TASK_URL } from './API_URL';
 export const FETCH_ALL_TASK = 'FETCH_ALL_TASK';
 export const FETCH_ONE_TASK = 'FETCH_ONE_TASK';
 export const ADD_TASK = 'ADD_TASK';
+export const DELETE_TASK = 'DELETE_TASK';
 
 export function fetchAllTask () {
   return dispatch => {
@@ -43,6 +44,19 @@ export function addTask (data) {
       .then(response => {
         dispatch({
           type: ADD_TASK,
+          payload: response
+        })
+      }
+    )
+  }
+}
+
+export function deleteTask (id) {
+  return dispatch => {
+    axios.delete(TASK_URL + id)
+      .then(response => {
+        dispatch({
+          type: DELETE_TASK,
           payload: response
         })
       }

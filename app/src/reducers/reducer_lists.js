@@ -1,4 +1,4 @@
-import { FETCH_ALL_TASK, FETCH_ONE_TASK, ADD_TASK } from '../actions';
+import { FETCH_ALL_TASK, FETCH_ONE_TASK, ADD_TASK, DELETE_TASK } from '../actions';
 
 const initialState = {
   task_list: [],
@@ -13,8 +13,12 @@ export function taskReducer(state = initialState, action) {
     case FETCH_ONE_TASK:
       return { ...state, task: action.payload.data };
     case ADD_TASK:
+      // TODO: error handling
       console.log(action.payload);
-      // TODO : error catch
+      return { ...state };
+    case DELETE_TASK:
+      // TODO: error handling
+      console.log(action.payload);
       return { ...state };
     default:
       return state;
