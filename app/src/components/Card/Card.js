@@ -49,10 +49,6 @@ class Card extends Component {
     });
   }
 
-  test (a) {
-    console.log(a);
-  }
-
   toggleModal (id) {
     this.setState({
       selected_card_id: id
