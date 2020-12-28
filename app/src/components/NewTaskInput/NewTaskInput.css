@@ -1,0 +1,28 @@
+.new-task {
+  width: -moz-available;          /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  
+  position: fixed;
+  bottom: 0;
+  margin: 0.3em;
+  color: #f2f2f2;
+}
+
+.new-task-button {
+  display: flex;
+  position: absolute;
+  margin: 1em;
+
+  cursor: pointer;
+}
+
+.new-task-input {
+  width: 100%;
+  
+  padding: 0.7em 0.7em 0.7em 2.7em;
+  border: none;
+  border-radius: 0.7em;
+  
+  background-color: #444444;
+  color: #f2f2f2;
+}
