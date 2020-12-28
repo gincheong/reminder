@@ -23,7 +23,8 @@ class Card extends Component {
           {this.renderCard()}
         </div> 
         {this.state.selected_card_id !== undefined ? (
-          <CardModal id={this.state.selected_card_id} toggleModal={this.toggleModal} />
+          <CardModal id={this.state.selected_card_id} toggleModal={this.toggleModal} 
+            refreshList={this.props.fetchAllTask} />
         ) : undefined }
         <NewTaskInput refreshList={this.props.fetchAllTask}/>
       </>

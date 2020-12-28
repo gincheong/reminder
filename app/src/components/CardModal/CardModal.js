@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchOneTask } from '../../actions';
+import { fetchOneTask, deleteTask } from '../../actions';
 import './CardModal.css';
 
 class CardModal extends Component {
   constructor (props) {
     super(props);
     this.props.fetchOneTask(this.props.id);
-    this.closeModal = this.closeModal.bind(this);
+    this.closeModalEvent = this.closeModalEvent.bind(this);
+    this.deleteTaskEvent = this.deleteTaskEvent.bind(this);
+    this.deleteTaskHint = this.deleteTaskHint.bind(this);
     this.modalRef = React.createRef();
   }
 
@@ -20,11 +22,11 @@ class CardModal extends Component {
             Task Description
           </span>
           <button type="button" className="card-modal-button card-modal-delete"
-            >
+            onDoubleClick={this.deleteTaskEvent}>
             <i className="fas fa-trash-alt"></i>
           </button>
           <button type="button" className="card-modal-button card-modal-close"
-            onClick={this.closeModal}>
+            onClick={this.closeModalEvent}>
             <i className="fas fa-times"></i>
           </button>
         </nav>
@@ -59,13 +61,19 @@ class CardModal extends Component {
     )
   }
 
-  closeModal () {
+  closeModalEvent () {
     // ? 이게 올바른 방식인지 모르겠음
     // TODO: 모달을 슬라이드로 닫기
     this.modalRef.current.classList.add('close-modal-animation');
     setTimeout(() => {
       this.props.toggleModal(undefined);
+      this.props.refreshList();
     }, 280);
+  }
+
+  deleteTaskEvent () {
+    this.props.deleteTask(this.props.id);
+    this.closeModalEvent();
   }
 
 }
@@ -78,7 +86,8 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
   return {
-    fetchOneTask: (id) => dispatch(fetchOneTask(id))
+    fetchOneTask: (id) => dispatch(fetchOneTask(id)),
+    deleteTask: (id) => dispatch(deleteTask(id))
   }
 }
 
