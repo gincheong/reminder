@@ -4,6 +4,7 @@ import { TASK_URL } from './API_URL';
 
 export const FETCH_ALL_TASK = 'FETCH_ALL_TASK';
 export const FETCH_ONE_TASK = 'FETCH_ONE_TASK';
+export const ADD_TASK = 'ADD_TASK';
 
 export function fetchAllTask () {
   return dispatch => {
@@ -29,6 +30,19 @@ export function fetchOneTask (id = "") {
       .then(response => {
         dispatch({
           type: FETCH_ONE_TASK,
+          payload: response
+        })
+      }
+    )
+  }
+}
+
+export function addTask (data) {
+  return dispatch => {
+    axios.post(TASK_URL, data)
+      .then(response => {
+        dispatch({
+          type: ADD_TASK,
           payload: response
         })
       }
