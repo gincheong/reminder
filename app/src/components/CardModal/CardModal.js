@@ -5,46 +5,69 @@ import { fetchOneTask } from '../../actions';
 import './CardModal.css';
 
 class CardModal extends Component {
-  componentDidUpdate (prevProps) {
-    if (this.props.id !== prevProps.id) {
-      this.props.fetchOneTask(this.props.id);
-    }
+  constructor (props) {
+    super(props);
+    this.props.fetchOneTask(this.props.id);
+    this.closeModal = this.closeModal.bind(this);
+    this.modalRef = React.createRef();
   }
 
   render () {
-    if (this.props.id === undefined) {
-      return '';
-    }
     return (
-      <div className="card-modal">
-        <div className="card-modal-header">
-          <button type="button" onClick={() => this.props.close(undefined)}>DEBUG</button>
-        </div>
+      <div className="card-modal open-modal-animation" ref={this.modalRef}>
+        <nav className="card-modal-header">
+          <span className="card-modal-name">
+            Task Description
+          </span>
+          <button type="button" className="card-modal-button card-modal-delete"
+            >
+            <i className="fas fa-trash-alt"></i>
+          </button>
+          <button type="button" className="card-modal-button card-modal-close"
+            onClick={this.closeModal}>
+            <i className="fas fa-times"></i>
+          </button>
+        </nav>
         {this.props.id !== undefined ? this.renderModal() : undefined}
       </div>
     )
   }
-
+  
+  // ! Rendering Delayed
   renderModal () {
     const { task } = this.props.cardmodal.taskReducer;
-    console.log(task);
+    
     return (
-      <div key={task.id} className="card-modal">
+      <div key={task.id} className="card-modal-content">
         <div className="card-modal-title">
-          Task : {task.title}
+          <i className="fas fa-list"></i> 
+          {task.title}
         </div>
         <div className="card-modal-date">
-          Date : {task.task_date}
+          <i className="fas fa-calendar"></i>
+          {task.task_date}
         </div>
         <div className="card-modal-alarm">
-          Alarm : {task.alarm === true ? "On" : "Off"}
+          <i className="fas fa-bell"></i>
+          {task.alarm === true ? "On" : "Off"}
         </div>
         <div className="card-modal-description">
-          Description : {task.description}
+          {task.description}
         </div>
       </div>
+      // ! 'alarm' icon need to be replaced
     )
   }
+
+  closeModal () {
+    // ? 이게 올바른 방식인지 모르겠음
+    // TODO: 모달을 슬라이드로 닫기
+    this.modalRef.current.classList.add('close-modal-animation');
+    setTimeout(() => {
+      this.props.toggleModal(undefined);
+    }, 280);
+  }
+
 }
 
 let mapStateToProps = (state) => {

@@ -1,0 +1,86 @@
+.card-modal {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+
+  color: #f2f2f2;
+  background-color: #2e2e2e;
+
+  z-index: 1;
+} 
+
+.open-modal-animation {
+  animation-name: open-modal;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes open-modal {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.close-modal-animation {
+  animation-name: close-modal;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes close-modal {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.card-modal-header {
+  display: flex;
+  align-items: center;
+  padding: 0em 1em;
+}
+
+.card-modal-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.card-modal-button {
+  line-height: 0.5em;
+  border: none;
+  margin: 0.7em;
+  padding: 0.3em;
+  font-size: 1.2em;
+  
+  background-color: #2e2e2e;
+}
+
+.card-modal-delete {
+  color: #c94646;
+}
+
+.card-modal-close {
+  color: #f2f2f2;
+}
+
+.card-modal-content > div {
+  line-height: 2.5em;
+  border-bottom: 1px solid #777777;
+  padding: 0em 1em;
+}
+
+.card-modal-content > div > .fas {
+  margin-right: 1em;
+  font-size: 1.2em;
+}
+
+.card-modal-description {
+  white-space: pre-line;
+}
