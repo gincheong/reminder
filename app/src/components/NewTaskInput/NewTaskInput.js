@@ -41,12 +41,13 @@ class NewTaskInput extends Component {
       }
       inputElement.value = "";
       
-      // ? 이 부분이 순서대로 작동 못 하는 경우?
+      // ! 비동기처리 필요함
       this.props.addTask(data);
       this.props.refreshList();
     } else {
       // TODO : delete this line, or add any alert message
       console.warn('must input valid value');
+      inputElement.value = "";
     }
   }
 }
