@@ -1,9 +1,6 @@
 .app {
   color: #ffffff;
 
-  height: 100vh;
-  padding-bottom: 4em;
-
   /* * Hide scrollbar during an animation */
   overflow-x: hidden;
   position: relative;
