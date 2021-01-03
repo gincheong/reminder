@@ -1,5 +1,5 @@
 .card-modal {
-  position: absolute;
+  position: fixed;
   left: 0%;
   top: 0%;
   width: 100%;
@@ -45,6 +45,7 @@
   display: flex;
   align-items: center;
   padding: 0em 1em;
+  height: 3em;
 }
 
 .card-modal-name {
@@ -52,28 +53,29 @@
   font-weight: bold;
 }
 
-.card-modal-button {
-  line-height: 0.5em;
-  border: none;
-  margin: 0.7em;
-  padding: 0.3em;
-  font-size: 1.2em;
-  
-  background-color: #2e2e2e;
-}
-
-.card-modal-delete {
-  color: #c94646;
-}
-
-.card-modal-close {
-  color: #f2f2f2;
-}
-
 .card-modal-content > div {
-  line-height: 2.5em;
+  display: flex;
+  align-items: center;
+
+  line-height: 3.5em;
   border-bottom: 1px solid #777777;
   padding: 0em 1em;
+}
+
+.card-modal-content > div > input, textarea {
+  flex: 1;
+
+  height: 3.5em;
+  font-family: inherit;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+}
+
+input::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  /* change input[date] calendar picker color */
 }
 
 .card-modal-content > div > .fas {
@@ -83,4 +85,39 @@
 
 .card-modal-description {
   white-space: pre-line;
+}
+
+.card-modal-footer {
+  width: 100%;
+  text-align: right;
+  position: fixed;
+  bottom: 0;
+}
+
+.card-modal-save {
+  color: #567ace;
+}
+
+.card-modal-delete {
+  color: #f36969;
+}
+
+.card-modal-button {
+  line-height: 0.5em;
+  border: none;
+  margin: 0.6em;
+  padding: 0.4em;
+  font-size: 1.5em;
+  
+  cursor: pointer;
+  background-color: #2e2e2e;
+}
+.card-modal-button:focus {
+  outline: none;
+  /* disable orange outline when button clicked */
+}
+
+
+.card-modal-close {
+  color: #f2f2f2;
 }
