@@ -6,6 +6,7 @@ export const FETCH_ALL_TASK = 'FETCH_ALL_TASK';
 export const FETCH_ONE_TASK = 'FETCH_ONE_TASK';
 export const ADD_TASK = 'ADD_TASK';
 export const DELETE_TASK = 'DELETE_TASK';
+export const UPDATE_TASK = 'UPDATE_TASK';
 
 export function fetchAllTask () {
   return dispatch => {
@@ -27,7 +28,7 @@ export function fetchAllTask () {
 
 export function fetchOneTask (id = "") {
   return dispatch => {
-    axios.get(TASK_URL + id)
+    axios.get(TASK_URL + id + '/')
       .then(response => {
         dispatch({
           type: FETCH_ONE_TASK,
@@ -57,6 +58,19 @@ export function deleteTask (id) {
       .then(response => {
         dispatch({
           type: DELETE_TASK,
+          payload: response
+        })
+      }
+    )
+  }
+}
+
+export function updateTask (id, data) {
+  return dispatch => {
+    axios.put(TASK_URL + id + '/', data)
+      .then(response => {
+        dispatch({
+          type: UPDATE_TASK,
           payload: response
         })
       }
