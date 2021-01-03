@@ -1,7 +1,12 @@
+.card {
+  padding-bottom: 4em;
+}
+
 .task-card {
-  border-radius: 1.5em;
   box-shadow: 0.2em 0.2em 0.4em black;
   /* x, y, blur, color */
+
+  border-radius: 1em;
   margin: 1em;
   padding: 0.5em;
 

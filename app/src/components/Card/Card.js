@@ -17,9 +17,8 @@ class Card extends Component {
 
   render () {
     return (
-      // ! className 'card' conflict with bootstrap 
       <>
-        <div> 
+        <div className="card"> 
           {this.renderCard()}
         </div> 
         {this.state.selected_card_id !== undefined ? (
@@ -54,15 +53,7 @@ class Card extends Component {
     this.setState({
       selected_card_id: id
     });
-  }
-
-  toggleCard (event) {
-    const element = event.currentTarget.parentElement.querySelector('.toggle')
-    if (element.style.maxHeight) {
-      element.style.maxHeight = null;
-    } else {
-      element.style.maxHeight = element.scrollHeight + "px";
-    }
+    console.log(id);
   }
 
 }
