@@ -20,5 +20,4 @@ class Task(BaseModel):
     title = models.CharField(max_length=200, null=False)
     description = models.TextField(null=True)
     task_date = models.DateField(null=True)
-    # TODO Improvement, 알람 기능 복잡화(몇 분, 하루 전 알람)하려면 Boolean만 쓰면 안 됨
-    alarm = models.BooleanField(default=False)
+    alarm = models.DateTimeField(null=True)
