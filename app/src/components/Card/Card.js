@@ -53,7 +53,6 @@ class Card extends Component {
     this.setState({
       selected_card_id: id
     });
-    console.log(id);
   }
 
 }
