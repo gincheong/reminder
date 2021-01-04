@@ -1,0 +1,36 @@
+.new-task {
+  width: -moz-available;          /* WebKit-based browsers will ignore this. */
+  width: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  
+  position: fixed;
+  bottom: 0;
+  border: 0.4em solid #2e2e2e;
+  color: #f2f2f2;
+}
+
+.new-task-button {
+  display: flex;
+  position: absolute;
+  margin: 1em;
+
+  cursor: pointer;
+}
+
+.new-task-input {
+  width: 100%;
+  
+  padding: 1em 1em 1em 2.7em;
+  border: none;
+  border-radius: 0.7em;
+  
+  background-color: #444444;
+  color: #f2f2f2;
+
+  font-size: 1em;
+  line-height: 1em;
+
+  box-sizing: border-box;
+}
+.new-task-input:focus {
+  outline: none;
+}

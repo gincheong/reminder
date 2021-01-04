@@ -1,38 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchAllTask, fetchOneTask } from '../../actions';
-import { Button } from '../';
+import { fetchAllTask } from '../../actions';
+import { CardModal, NewTaskInput } from '../';
 import './Card.css';
 
 class Card extends Component {
-  componentDidMount () {
-    // DOM이 갖춰지고 나서 실행되어야 할 초기화문을 보통 여기서 한다
+  constructor (props) {
+    super(props);
+    this.state = {
+      selected_card_id: undefined
+    }
+    this.toggleModal = this.toggleModal.bind(this);
     this.props.fetchAllTask();
-  }
-
-  componentDidUpdate () {
-    // state나 props이 바뀌어 컴포넌트가 갱신될 때 실행될 부분
-    console.log("Props", this.props);
-    console.log("State", this.state);
   }
 
   render () {
     return (
-      <div className="card">
-        {this.renderCard()}
-      </div>
+      <>
+        <div className="card"> 
+          {this.renderCard()}
+        </div> 
+        {this.state.selected_card_id !== undefined ? (
+          <CardModal id={this.state.selected_card_id} toggleModal={this.toggleModal} 
+            refreshList={this.props.fetchAllTask} />
+        ) : undefined }
+        <NewTaskInput refreshList={this.props.fetchAllTask}/>
+      </>
     );
   }
 
   renderCard () {
-    const { taskList } = this.props.Card.taskReducer;
+    const { task_list } = this.props.card.taskReducer;
     
-    return taskList.map((each) => {
-      const date = each.task_date.substr(0, 10);
+    return task_list.map((each) => {
       return (
         <div key={each.id} className="task-card">
-          <div className="task-card-header" onClick={(event) => this.toggleCard(event)}>
+          <div className="task-card-header" onClick={() => this.toggleModal(each.id)}>
             <div className="task-title">
               {each.title}
             </div>
@@ -40,52 +44,28 @@ class Card extends Component {
               {each.description}
             </div>
           </div>
-          {/* Toggle Content */}
-          <div className="toggle">
-            <hr />
-            <div className="task-detail">
-              <div className="task-date">
-                <input className="task-datepicker" type="date" defaultValue={date} />
-              </div>
-              <div className="task-alarm">
-                {each.alarm ? "True" : "False" }
-              </div>
-              <>
-                <Button event={this.test} name="Edit" />
-                <Button event={this.test} name="Delete" />
-              </>
-            </div>
-          </div>
         </div>
       )
     });
   }
 
-  test (event) {
-    console.log(event);
-  }
-
-  toggleCard (event) {
-    const element = event.currentTarget.parentElement.querySelector('.toggle')
-    if (element.style.maxHeight) {
-      element.style.maxHeight = null;
-    } else {
-      element.style.maxHeight = element.scrollHeight + "px";
-    }
+  toggleModal (id) {
+    this.setState({
+      selected_card_id: id
+    });
   }
 
 }
 
 let mapStateToProps = (state) => {
   return {
-    Card: state
+    card: state
   }
 }
 
 let mapDispatchToProps = (dispatch) => {
   return {
     fetchAllTask: () => dispatch(fetchAllTask()),
-    fetchOneTask: (id) => dispatch(fetchOneTask(id))
   }
 }
 

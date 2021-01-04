@@ -1,0 +1,17 @@
+.card-modal-input {
+  flex: 1;
+
+  height: 3.5em;
+  font-family: inherit;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+
+  margin-right: 1em;
+  outline: none;
+}
+
+.card-modal-input-clear {
+  cursor: pointer;
+}

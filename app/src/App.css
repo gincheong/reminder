@@ -1,4 +1,7 @@
 .app {
-  text-align: center;
   color: #ffffff;
+
+  /* * Hide scrollbar during an animation */
+  overflow-x: hidden;
+  position: relative;
 }

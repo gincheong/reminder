@@ -1,0 +1,12 @@
+.card-modal-textarea {
+  flex: 1;
+
+  font-family: inherit;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+  border: none;
+
+  resize: none;
+  outline: none;
+}
