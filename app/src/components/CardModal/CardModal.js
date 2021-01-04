@@ -21,6 +21,7 @@ class CardModal extends Component {
     this.modalRef = React.createRef();
     this.titleRef = React.createRef();
     this.task_dateRef = React.createRef();
+    this.alarmRef = React.createRef();
     // TODO : Ref 각각 만들어서, Save시에 각 value 불러오기
   }
 
@@ -80,15 +81,15 @@ class CardModal extends Component {
       <div key={task.id} className="card-modal-content">
         <div className="card-modal-title">
           <i className="fas fa-list"></i>
-          <Input type="text" value={task.title} name="title" ref={this.titleRef}/>
+          <Input type="text" value={task.title} name="title" ref={this.titleRef} clearButton />
         </div>
         <div className="card-modal-date">
           <i className="fas fa-calendar"></i>
-          <Input type="date" value={task_date} name="task_date" ref={this.task_dateRef}/>
+          <Input type="date" value={task_date} name="task_date" ref={this.task_dateRef} clearButton />
         </div>
         <div className="card-modal-alarm">
           <i className="fas fa-bell"></i>
-          <Input type="checkbox" value={task.alarm} name="alarm" />
+          <Input type="datetime-local" value={task.alarm} name="alarm" ref={this.alarmRef} clearButton />
           {/* // TODO: django model 수정하기, 그러면 체크박스 안 쓰게 될 것 */}
         </div>
         <div className="card-modal-description">
@@ -105,17 +106,15 @@ class CardModal extends Component {
     // TODO: Action 만들기
     const title = this.titleRef.current.state.value;
     const task_date = this.task_dateRef.current.state.value;
+    const alarm = this.alarmRef.current.state.value;
 
     const data = new FormData();
     data.append('title', title);
     data.append('task_date', task_date);
+    data.append('alarm', alarm);
 
-    console.log(title);
-    console.log(task_date);
-    
     this.props.updateTask(this.props.id, data);
     this.closeModalEvent();
-    // ?: 저장하고 나서 해당 항목 다시 열면, 모달에 이전 값들이 들어가 있음
   }
 
   deleteTaskEvent () {
