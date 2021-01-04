@@ -6,19 +6,17 @@
   box-shadow: 0.2em 0.2em 0.4em black;
   /* x, y, blur, color */
 
-  border-radius: 1em;
-  margin: 1em;
   padding: 0.5em;
 
-  background-color: #777777;
+  background-color: #3e3e3e;
   text-align: left;
 }
 
 .task-card-header {
   cursor: pointer;
-  border: 0.8em solid #777777;
+  border: 0.8em solid #3e3e3e;
 
-  color: #000000;
+  color: #f2f2f2;
   transition: color 0.3s ease-out;
 }
 .task-card-header:hover {
@@ -31,9 +29,13 @@
   font-weight: bold;
 }
 
-.task-description {
+.task-summary {
   font-size: 0.9em;
-  color: #000000;
+  color: #cccccc;
+}
+
+.task-summary > * {
+  margin: 0em 0.5em;
 }
 
 .toggle {

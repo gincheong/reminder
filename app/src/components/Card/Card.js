@@ -32,16 +32,26 @@ class Card extends Component {
 
   renderCard () {
     const { task_list } = this.props.card.taskReducer;
-    
     return task_list.map((each) => {
+      if (each.alarm) {
+        each.alarm = each.alarm.replace('T', ' ').substr(0, 16);
+      }
+
       return (
         <div key={each.id} className="task-card">
           <div className="task-card-header" onClick={() => this.toggleModal(each.id)}>
             <div className="task-title">
               {each.title}
             </div>
-            <div className="task-description">
-              {each.description}
+            <div className="task-summary">
+              {each.task_date ? (
+                <><i className="fas fa-calendar"></i>{each.task_date}</>)
+                : undefined}
+              {each.alarm ? (
+                <><i className="fas fa-bell"></i>{each.alarm}</>)
+                : undefined}
+              {/* // TODO: datetime 출력 형식 바꾸기 */}
+              <br/>
             </div>
           </div>
         </div>
