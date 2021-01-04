@@ -1,7 +1,7 @@
 .card-modal-input {
   flex: 1;
 
-  height: 3.5em;
+  height: 2em;
   font-family: inherit;
   font-size: inherit;
   background-color: inherit;
@@ -11,6 +11,12 @@
   margin-right: 1em;
   outline: none;
 }
+
+.card-modal-input::placeholder,
+.card-modal-input::-webkit-input-placeholder {
+  color: #db706c;
+}
+
 
 .card-modal-input-clear {
   cursor: pointer;

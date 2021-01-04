@@ -10,6 +10,8 @@ class Input extends Component {
     }
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.clearEvent = this.clearEvent.bind(this);
+
+    this.inputRef = React.createRef();
   }
 
   render () {
@@ -19,10 +21,13 @@ class Input extends Component {
               value={this.state.value}
               onChange={this.onChangeHandler}
               className="card-modal-input"
+              placeholder={this.props.placeholder}
+              spellCheck="false"
+              ref={this.inputRef}
         />
         {this.props.clearButton ? (
           <div className="card-modal-input-clear" onClick={this.clearEvent}>
-            <i className="fas fa-backspace"></i>
+            <i className="fas fa-eraser"></i>
           </div>
         ) : undefined }
       </>
@@ -33,6 +38,12 @@ class Input extends Component {
     this.setState({
       value: e.target.value
     });
+
+    if (this.props.notNull && !e.target.value) {
+      this.inputRef.current.style.outline = '1px solid #db706c';
+    } else {
+      this.inputRef.current.style.outline = '';
+    }
   }
 
   clearEvent (e) {

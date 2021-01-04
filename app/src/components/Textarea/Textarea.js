@@ -14,13 +14,13 @@ class Textarea extends Component {
   }
 
   render () {
-    const style = { height: this.state.height };
     return (
       <textarea value={this.state.value}
                 onChange={this.onChangeHandler}
                 className="card-modal-textarea"
                 rows={this.props.rows}
                 ref={this.textareaRef}
+                spellCheck='false'
       />
     );
   }

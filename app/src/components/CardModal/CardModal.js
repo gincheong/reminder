@@ -81,7 +81,8 @@ class CardModal extends Component {
       <div key={task.id} className="card-modal-content">
         <div className="card-modal-title">
           <i className="fas fa-list"></i>
-          <Input type="text" value={task.title} name="title" ref={this.titleRef} clearButton />
+          <Input type="text" value={task.title} name="title" ref={this.titleRef} clearButton notNull
+                 placeholder="Title Must be Filled" />
         </div>
         <div className="card-modal-date">
           <i className="fas fa-calendar"></i>
@@ -92,6 +93,7 @@ class CardModal extends Component {
           <Input type="datetime-local" value={task.alarm} name="alarm" ref={this.alarmRef} clearButton />
         </div>
         <div className="card-modal-description">
+          <i className="fas fa-comment"></i>
           <Textarea value={task.description} rows='10' ref={this.descriptionRef} />
           {/* // TODO: 이벤트 동일하게 적용하기, 크기조절 없애기, 스크롤 자동으로 늘어나게 하기 */}
         </div>
@@ -103,6 +105,10 @@ class CardModal extends Component {
   saveTaskEvent () {
     // TODO: Action 만들기
     const title = this.titleRef.current.state.value;
+    if (!title) {
+      return;
+    }
+
     const task_date = this.task_dateRef.current.state.value;
     const alarm = this.alarmRef.current.state.value;
     const description = this.descriptionRef.current.state.value;
