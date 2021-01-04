@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchOneTask, deleteTask, updateTask } from '../../actions';
-import { Tooltip, Input } from '../../components';
+import { Tooltip, Input, Textarea } from '../../components';
 import './CardModal.css';
 
 class CardModal extends Component {
@@ -22,6 +22,7 @@ class CardModal extends Component {
     this.titleRef = React.createRef();
     this.task_dateRef = React.createRef();
     this.alarmRef = React.createRef();
+    this.descriptionRef = React.createRef();
     // TODO : Ref 각각 만들어서, Save시에 각 value 불러오기
   }
 
@@ -68,7 +69,6 @@ class CardModal extends Component {
    
   // ! Rendering Delayed
   renderModal () {
-    // const { task } = this.props.cardmodal.taskReducer;
     const { task } = this.state;
     var { task_date } = task; 
     if (task_date) {
@@ -90,11 +90,9 @@ class CardModal extends Component {
         <div className="card-modal-alarm">
           <i className="fas fa-bell"></i>
           <Input type="datetime-local" value={task.alarm} name="alarm" ref={this.alarmRef} clearButton />
-          {/* // TODO: django model 수정하기, 그러면 체크박스 안 쓰게 될 것 */}
         </div>
         <div className="card-modal-description">
-          {/* <textarea value={task.description} /> */}
-          {task.description}
+          <Textarea value={task.description} rows='10' ref={this.descriptionRef} />
           {/* // TODO: 이벤트 동일하게 적용하기, 크기조절 없애기, 스크롤 자동으로 늘어나게 하기 */}
         </div>
       </div>
@@ -107,11 +105,13 @@ class CardModal extends Component {
     const title = this.titleRef.current.state.value;
     const task_date = this.task_dateRef.current.state.value;
     const alarm = this.alarmRef.current.state.value;
+    const description = this.descriptionRef.current.state.value;
 
     const data = new FormData();
     data.append('title', title);
     data.append('task_date', task_date);
     data.append('alarm', alarm);
+    data.append('description', description);
 
     this.props.updateTask(this.props.id, data);
     this.closeModalEvent();
