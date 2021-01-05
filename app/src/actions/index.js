@@ -1,7 +1,7 @@
-export {
-  fetchAllTask, FETCH_ALL_TASK,
-  fetchOneTask, FETCH_ONE_TASK,
-  addTask, ADD_TASK,
-  deleteTask, DELETE_TASK,
-  updateTask, UPDATE_TASK,
+export { Types as Task_Types,
+  fetchAllTask,
+  fetchOneTask,
+  addTask,
+  deleteTask,
+  updateTask,
 } from './Task';

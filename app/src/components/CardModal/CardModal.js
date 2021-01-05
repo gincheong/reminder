@@ -93,7 +93,7 @@ class CardModal extends Component {
           <Input type="datetime-local" value={task.alarm} name="alarm" ref={this.alarmRef} clearButton />
         </div>
         <div className="card-modal-description">
-          <i className="fas fa-comment"></i>
+          <i className="fas fa-ellipsis-v"></i>
           <Textarea value={task.description} rows='10' ref={this.descriptionRef} />
           {/* // TODO: 이벤트 동일하게 적용하기, 크기조절 없애기, 스크롤 자동으로 늘어나게 하기 */}
         </div>
@@ -119,8 +119,10 @@ class CardModal extends Component {
     data.append('alarm', alarm);
     data.append('description', description);
 
-    this.props.updateTask(this.props.id, data);
-    this.closeModalEvent();
+    this.props.updateTask(this.props.id, data).then(response => {
+      this.closeModalEvent();
+      // ? 이걸 이렇게 사용해도 되는가
+    });
   }
 
   deleteTaskEvent () {

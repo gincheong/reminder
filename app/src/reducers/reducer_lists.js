@@ -1,29 +1,36 @@
-import { FETCH_ALL_TASK, FETCH_ONE_TASK, ADD_TASK, DELETE_TASK, UPDATE_TASK } from '../actions';
+import { Task_Types as TYPE } from '../actions';
 
 const initialState = {
   task_list: [],
-  task: {}
+  task: {},
+  pending: null,
+  error: false,
+  // ! unused key
 }
 
 export function taskReducer(state = initialState, action) {
   // * 현재 state에서, action을 받아 다음 state를 만들어 반환함
   switch (action.type) {
-    case FETCH_ALL_TASK:
+    case TYPE.READ_ALL:
       return { ...state, task_list: action.payload.data };
-    case FETCH_ONE_TASK:
+    case TYPE.READ:
       return { ...state, task: action.payload.data };
-    case ADD_TASK:
+    case TYPE.CREATE:
       // TODO: error handling
       console.log(action.payload);
       return { ...state };
-    case DELETE_TASK:
+    case TYPE.DELETE:
       // TODO: error handling
       console.log(action.payload);
       return { ...state };
-    case UPDATE_TASK:
+
+    case TYPE.UPDATE_PENDING:
+      return { ...state, pending: true };
+    case TYPE.UPDATE_SUCCESS:
       // TODO: error handling
-      console.log(action.payload);
-      return { ...state };
+      return { ...state, pending: false };
+    case TYPE.UPDATE_FAILURE:
+      return { ...state, pending: null, error: true };
     default:
       return state;
   }

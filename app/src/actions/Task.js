@@ -2,11 +2,15 @@ import axios from 'axios';
 
 import { TASK_URL } from './API_URL';
 
-export const FETCH_ALL_TASK = 'FETCH_ALL_TASK';
-export const FETCH_ONE_TASK = 'FETCH_ONE_TASK';
-export const ADD_TASK = 'ADD_TASK';
-export const DELETE_TASK = 'DELETE_TASK';
-export const UPDATE_TASK = 'UPDATE_TASK';
+export const Types = {
+  READ_ALL: 'task/READ_ALL',
+  READ: 'task/READ',
+  CREATE: 'task/CREATE',
+  DELETE: 'task/DELETE',
+  UPDATE_PENDING: 'task/UPDATE_PENDING',
+  UPDATE_SUCCESS: 'task/UPDATE_SUCCESS',
+  UPDATE_FAILURE: 'task/UPDATE_FAILRUE',
+};
 
 export function fetchAllTask () {
   return dispatch => {
@@ -15,7 +19,7 @@ export function fetchAllTask () {
     axios.get(TASK_URL)
       .then(response => {
         dispatch({
-          type: FETCH_ALL_TASK,
+          type: Types.READ_ALL,
           payload: response
         })
       }
@@ -31,7 +35,7 @@ export function fetchOneTask (id = "") {
     axios.get(TASK_URL + id + '/')
       .then(response => {
         dispatch({
-          type: FETCH_ONE_TASK,
+          type: Types.READ,
           payload: response
         })
       }
@@ -44,7 +48,7 @@ export function addTask (data) {
     axios.post(TASK_URL, data)
       .then(response => {
         dispatch({
-          type: ADD_TASK,
+          type: Types.CREATE,
           payload: response
         })
       }
@@ -57,7 +61,7 @@ export function deleteTask (id) {
     axios.delete(TASK_URL + id)
       .then(response => {
         dispatch({
-          type: DELETE_TASK,
+          type: Types.DELETE,
           payload: response
         })
       }
@@ -67,13 +71,23 @@ export function deleteTask (id) {
 
 export function updateTask (id, data) {
   return dispatch => {
-    axios.put(TASK_URL + id + '/', data)
-      .then(response => {
-        dispatch({
-          type: UPDATE_TASK,
-          payload: response
-        })
-      }
-    )
+    // ! unused
+    dispatch({
+      type: Types.UPDATE_PENDING
+    });
+    const promise = axios.put(TASK_URL + id + '/', data);
+    promise.then(response => {
+      dispatch({
+        type: Types.UPDATE_SUCCESS,
+        payload: response
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: Types.UPDATE_FAILURE,
+        payload: error
+      })
+    })
+    return promise;
   }
 }
