@@ -104,7 +104,6 @@ class CardModal extends Component {
           {/* // TODO: 이벤트 동일하게 적용하기, 크기조절 없애기, 스크롤 자동으로 늘어나게 하기 */}
         </div>
       </div>
-      // ! 'alarm' icon need to be replaced
     )
   }
 

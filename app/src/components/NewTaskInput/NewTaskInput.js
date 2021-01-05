@@ -46,8 +46,6 @@ class NewTaskInput extends Component {
         this.props.refreshList();
       });
     } else {
-      // TODO : delete this line, or add any alert message
-      console.warn('must input valid value');
       inputElement.value = "";
     }
   }
