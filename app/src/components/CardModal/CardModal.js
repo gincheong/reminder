@@ -16,6 +16,7 @@ class CardModal extends Component {
     
     this.saveTaskEvent = this.saveTaskEvent.bind(this);
     this.deleteTaskEvent = this.deleteTaskEvent.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.closeModalEvent = this.closeModalEvent.bind(this);
 
     this.modalRef = React.createRef();
@@ -24,6 +25,7 @@ class CardModal extends Component {
     this.alarmRef = React.createRef();
     this.descriptionRef = React.createRef();
     // TODO : Ref 각각 만들어서, Save시에 각 value 불러오기
+
   }
 
   shouldComponentUpdate (nextProps) {
@@ -35,6 +37,10 @@ class CardModal extends Component {
       });
     }
     return true; 
+  }
+
+  componentDidMount () {
+    this.closeModalEvent();
   }
 
   render () {
@@ -59,7 +65,7 @@ class CardModal extends Component {
             </button>
           </Tooltip>
           <button type="button" className="card-modal-button card-modal-close"
-            onClick={this.closeModalEvent}>
+            onClick={this.closeModal}>
             <i className="fas fa-times"></i>
           </button>
         </div>
@@ -119,25 +125,29 @@ class CardModal extends Component {
     data.append('alarm', alarm);
     data.append('description', description);
 
-    this.props.updateTask(this.props.id, data).then(response => {
-      this.closeModalEvent();
-      // ? 이걸 이렇게 사용해도 되는가
+    this.props.updateTask(this.props.id, data).then(() => {
+      this.closeModal();
     });
   }
 
   deleteTaskEvent () {
-    this.props.deleteTask(this.props.id);
-    this.closeModalEvent();
-  }i
+    this.props.deleteTask(this.props.id).then(() => {;
+    this.closeModal();
+    });
+  }
+
+  closeModal () {
+    this.modalRef.current.classList.add('close-modal-animation');
+  }
 
   closeModalEvent () {
-    // ? 이게 올바른 방식인지 모르겠음
-    // TODO: 모달을 슬라이드로 닫기
-    this.modalRef.current.classList.add('close-modal-animation');
-    setTimeout(() => {
-      this.props.toggleModal(undefined);
-      this.props.refreshList();
-    }, 280);
+    const element = this.modalRef.current;
+    element.addEventListener('animationend', (event) => {
+      if (event.animationName === 'close-modal') {
+        this.props.toggleModal(undefined);
+        this.props.refreshList();
+      }
+    });
   }
 
 }

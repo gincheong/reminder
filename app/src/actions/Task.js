@@ -16,7 +16,7 @@ export function fetchAllTask () {
   return dispatch => {
     // TODO : add more type
     //  dispatch(waiting)
-    axios.get(TASK_URL)
+    return axios.get(TASK_URL)
       .then(response => {
         dispatch({
           type: Types.READ_ALL,
@@ -32,7 +32,7 @@ export function fetchAllTask () {
 
 export function fetchOneTask (id = "") {
   return dispatch => {
-    axios.get(TASK_URL + id + '/')
+    return axios.get(TASK_URL + id + '/')
       .then(response => {
         dispatch({
           type: Types.READ,
@@ -45,7 +45,7 @@ export function fetchOneTask (id = "") {
 
 export function addTask (data) {
   return dispatch => {
-    axios.post(TASK_URL, data)
+    return axios.post(TASK_URL, data)
       .then(response => {
         dispatch({
           type: Types.CREATE,
@@ -58,7 +58,7 @@ export function addTask (data) {
 
 export function deleteTask (id) {
   return dispatch => {
-    axios.delete(TASK_URL + id)
+    return axios.delete(TASK_URL + id)
       .then(response => {
         dispatch({
           type: Types.DELETE,
@@ -71,12 +71,10 @@ export function deleteTask (id) {
 
 export function updateTask (id, data) {
   return dispatch => {
-    // ! unused
-    dispatch({
-      type: Types.UPDATE_PENDING
-    });
-    const promise = axios.put(TASK_URL + id + '/', data);
-    promise.then(response => {
+    // TODO: pending일 때 스피너 추가?
+    dispatch({ type: Types.UPDATE_PENDING });
+    return axios.put(TASK_URL + id + '/', data)
+    .then(response => {
       dispatch({
         type: Types.UPDATE_SUCCESS,
         payload: response
@@ -88,6 +86,5 @@ export function updateTask (id, data) {
         payload: error
       })
     })
-    return promise;
   }
 }

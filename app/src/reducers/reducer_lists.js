@@ -28,7 +28,7 @@ export function taskReducer(state = initialState, action) {
       return { ...state, pending: true };
     case TYPE.UPDATE_SUCCESS:
       // TODO: error handling
-      return { ...state, pending: false };
+      return { ...state, pending: false, error: false };
     case TYPE.UPDATE_FAILURE:
       return { ...state, pending: null, error: true };
     default:
