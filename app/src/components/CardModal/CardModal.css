@@ -81,32 +81,5 @@ input::-webkit-calendar-picker-indicator {
   text-align: right;
   position: fixed;
   bottom: 0;
-}
-
-.card-modal-save {
-  color: #567ace;
-}
-
-.card-modal-delete {
-  color: #f36969;
-}
-
-.card-modal-button {
-  line-height: 0.5em;
-  border: none;
-  margin: 0.6em;
-  padding: 0.4em;
-  font-size: 1.5em;
-  
-  cursor: pointer;
-  background-color: #2e2e2e;
-}
-.card-modal-button:focus {
-  outline: none;
-  /* disable orange outline when button clicked */
-}
-
-
-.card-modal-close {
   color: #f2f2f2;
 }

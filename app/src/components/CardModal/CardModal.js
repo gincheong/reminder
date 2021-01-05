@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchOneTask, deleteTask, updateTask } from '../../actions';
-import { Tooltip, Input, Textarea } from '../../components';
+import { ModalButton, Input, Textarea } from '../../components';
 import './CardModal.css';
 
 class CardModal extends Component {
@@ -24,7 +24,8 @@ class CardModal extends Component {
     this.task_dateRef = React.createRef();
     this.alarmRef = React.createRef();
     this.descriptionRef = React.createRef();
-    // TODO : Ref 각각 만들어서, Save시에 각 value 불러오기
+
+    this.deleteButtonRef = React.createRef();
   }
 
   shouldComponentUpdate (nextProps) {
@@ -38,13 +39,11 @@ class CardModal extends Component {
     return true; 
   }
 
-  componentDidMount () {
-    this.closeModalEvent();
-  }
-
   render () {
     return (
-      <div className="card-modal open-modal-animation" ref={this.modalRef}>
+      <div className="card-modal open-modal-animation" ref={this.modalRef}
+           onAnimationEnd={this.closeModalEvent}
+      >
         <div className="card-modal-header">
           <span className="card-modal-name">
             Task Description
@@ -53,20 +52,15 @@ class CardModal extends Component {
         {this.props.id !== undefined ? this.renderModal() : undefined}
 
         <div className="card-modal-footer">
-          <button type="button" className="card-modal-button card-modal-save"
-            onClick={this.saveTaskEvent}>
-            <i className="fas fa-save"></i>
-          </button>
-          <Tooltip message="Double Click">
-            <button type="button" className="card-modal-button card-modal-delete"
-              onDoubleClick={this.deleteTaskEvent}>
-              <i className="fas fa-trash-alt"></i>
-            </button>
-          </Tooltip>
-          <button type="button" className="card-modal-button card-modal-close"
-            onClick={this.closeModal}>
+          <ModalButton onDoubleClick={this.saveTaskEvent} animationname="modal-button-save">
+            <i className="fas fa-save"></i>            
+          </ModalButton>
+          <ModalButton onDoubleClick={this.deleteTaskEvent} animationname="modal-button-delete">
+            <i className="fas fa-trash-alt"></i>
+          </ModalButton>
+          <ModalButton onClick={this.closeModal}>
             <i className="fas fa-times"></i>
-          </button>
+          </ModalButton>
         </div>
       </div>
     )
@@ -138,14 +132,11 @@ class CardModal extends Component {
     this.modalRef.current.classList.add('close-modal-animation');
   }
 
-  closeModalEvent () {
-    const element = this.modalRef.current;
-    element.addEventListener('animationend', (event) => {
-      if (event.animationName === 'close-modal') {
-        this.props.toggleModal(undefined);
-        this.props.refreshList();
-      }
-    });
+  closeModalEvent (event) {
+    if (event.animationName === 'close-modal') {
+      this.props.toggleModal(undefined);
+      this.props.refreshList();
+    }
   }
 
 }
