@@ -42,8 +42,9 @@ class NewTaskInput extends Component {
       inputElement.value = "";
       
       // ! 비동기처리 필요함
-      this.props.addTask(data);
-      this.props.refreshList();
+      this.props.addTask(data).then(() => {
+        this.props.refreshList();
+      });
     } else {
       // TODO : delete this line, or add any alert message
       console.warn('must input valid value');
