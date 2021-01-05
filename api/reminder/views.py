@@ -1,7 +1,9 @@
+from django.db.models import Case, When, Value, IntegerField
 from django.shortcuts import render
 from django.http import HttpResponse
 
 from rest_framework import viewsets
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import TaskSerializers
@@ -17,5 +19,16 @@ class TaskViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend, )
     filter_fields = ('title', 'description', )
 
-    # TODO get_queryset 함수를 커스텀해서, description만 검색해도
-    # 검색결과를 반환할 수 있게 함
+    def list(self, request):
+        queryset = Task.objects.all().annotate(
+            date_none=Case(
+                When(task_date=None, then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField()
+            )
+        ).order_by('date_none', 'task_date')
+        # 이른 날짜 -> 늦은 날짜 -> 날짜 입력 없음 순으로 정렬
+
+        serializer_class = TaskSerializers(queryset, many=True)
+        
+        return Response(serializer_class.data)
