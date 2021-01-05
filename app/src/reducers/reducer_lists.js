@@ -17,11 +17,9 @@ export function taskReducer(state = initialState, action) {
       return { ...state, task: action.payload.data };
     case TYPE.CREATE:
       // TODO: error handling
-      console.log(action.payload);
       return { ...state };
     case TYPE.DELETE:
       // TODO: error handling
-      console.log(action.payload);
       return { ...state };
 
     case TYPE.UPDATE_PENDING:
