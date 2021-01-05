@@ -25,7 +25,6 @@ class CardModal extends Component {
     this.alarmRef = React.createRef();
     this.descriptionRef = React.createRef();
     // TODO : Ref 각각 만들어서, Save시에 각 value 불러오기
-
   }
 
   shouldComponentUpdate (nextProps) {
@@ -130,8 +129,8 @@ class CardModal extends Component {
   }
 
   deleteTaskEvent () {
-    this.props.deleteTask(this.props.id).then(() => {;
-    this.closeModal();
+    this.props.deleteTask(this.props.id).then(() => {
+      this.closeModal();
     });
   }
 
