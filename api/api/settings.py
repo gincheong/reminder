@@ -18,12 +18,11 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open("api/secret_key.json") as f:
+with open(str(BASE_DIR) + "/api/secret_key.json") as f:
     SECRET_KEY = json.loads(f.read())["SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'reminder',
     'django_filters',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +133,18 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     )
 }
+
+# django-crontab
+# ┌───────────── minute (0 - 59)
+# │ ┌───────────── hour (0 - 23)
+# │ │ ┌───────────── day of the month (1 - 31)
+# │ │ │ ┌───────────── month (1 - 12)
+# │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+# │ │ │ │ │                              7 is also Sunday on some systems)
+# * * * * * <command to execute>
+CRONJOBS = [
+    ('* * * * *', 'reminder.cron.cron', '>> ' + str(BASE_DIR) + '/reminder/cron.log 2>&1'),
+]
+
+# prevent starting a job if an old instance of the same job is still running
+# CRONTAB_LOCK_JOBS = True
