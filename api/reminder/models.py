@@ -21,3 +21,6 @@ class Task(BaseModel):
     description = models.TextField(null=True)
     task_date = models.DateField(null=True)
     alarm = models.DateTimeField(null=True)
+
+    # TODO(#10): expired 필드 추가하여, 알람 찾을 때 expired된 항목들 제외함 
+    # alarm_expired = models.BooleanField(null=False, default=False)
