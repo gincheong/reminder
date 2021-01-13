@@ -36,7 +36,7 @@
 }
 
 .task-summary > * {
-  margin: 0em 0.5em;
+  margin: 0em 0.3em;
 }
 
 .toggle {
@@ -47,4 +47,8 @@
 
 .task-detail {
   padding: 0.8em;
+}
+
+.font-red {
+  color: #db706c;
 }
