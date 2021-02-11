@@ -20,7 +20,8 @@ class Textarea extends Component {
                 className="card-modal-textarea"
                 rows={this.props.rows}
                 ref={this.textareaRef}
-                spellCheck='false'
+                spellCheck="false"
+                placeholder="add descriptions"
       />
     );
   }

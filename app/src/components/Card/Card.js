@@ -18,9 +18,9 @@ class Card extends Component {
   render () {
     return (
       <>
-        <div className="card"> 
+        <section className="card"> 
           {this.renderCard()}
-        </div> 
+        </section> 
         {this.state.selected_card_id !== undefined ? (
           <CardModal id={this.state.selected_card_id} toggleModal={this.toggleModal} 
             refreshList={this.props.fetchAllTask} />
@@ -41,7 +41,7 @@ class Card extends Component {
       const task_date = new Date(each.task_date);
       
       return (
-        <div key={each.id} className="task-card">
+        <article key={each.id} className="task-card">
           <div className="task-card-header" onClick={() => this.toggleModal(each.id)}>
             <div className="task-title">
               {each.title}
@@ -60,7 +60,7 @@ class Card extends Component {
                 : undefined}
             </div>
           </div>
-        </div>
+        </article>
       )
     });
   }

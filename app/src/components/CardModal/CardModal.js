@@ -41,17 +41,17 @@ class CardModal extends Component {
 
   render () {
     return (
-      <div className="card-modal open-modal-animation" ref={this.modalRef}
+      <section className="card-modal open-modal-animation" ref={this.modalRef}
            onAnimationEnd={this.onAnimationEnd}
       >
-        <div className="card-modal-header">
+        <header className="card-modal-header">
           <span className="card-modal-name">
             Task Description
           </span>
-        </div>
+        </header>
         {this.props.id !== undefined ? this.renderModal() : undefined}
 
-        <div className="card-modal-footer">
+        <footer className="card-modal-footer">
           <ModalButton onDoubleClick={this.saveTaskEvent} animationname="modal-button-save">
             <i className="fas fa-save"></i>            
           </ModalButton>
@@ -61,8 +61,8 @@ class CardModal extends Component {
           <ModalButton onClick={this.closeModal}>
             <i className="fas fa-times"></i>
           </ModalButton>
-        </div>
-      </div>
+        </footer>
+      </section>
     )
   }
    
@@ -77,7 +77,7 @@ class CardModal extends Component {
     }
     
     return (
-      <div key={task.id} className="card-modal-content">
+      <main key={task.id} className="card-modal-content">
         <div className="card-modal-title">
           <i className="fas fa-list"></i>
           <Input type="text" value={task.title} name="title" ref={this.titleRef} clearButton notNull
@@ -96,7 +96,7 @@ class CardModal extends Component {
           <Textarea value={task.description} rows='10' ref={this.descriptionRef} />
           {/* // TODO: 이벤트 동일하게 적용하기, 크기조절 없애기, 스크롤 자동으로 늘어나게 하기 */}
         </div>
-      </div>
+      </main>
     )
   }
 
