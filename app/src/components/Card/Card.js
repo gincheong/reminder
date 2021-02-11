@@ -31,7 +31,7 @@ class Card extends Component {
   }
 
   renderCard () {
-    const { task_list } = this.props.card.taskReducer;
+    const task_list = this.props.task_list;
     const tempDate = new Date();
     const todayDate = new Date(Date.UTC(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate()));
     return task_list.map((each) => {
@@ -75,7 +75,7 @@ class Card extends Component {
 
 let mapStateToProps = (state) => {
   return {
-    card: state
+    task_list: state.taskReducer.task_list
   }
 }
 
@@ -85,6 +85,4 @@ let mapDispatchToProps = (dispatch) => {
   }
 }
 
-Card = connect(mapStateToProps, mapDispatchToProps)(Card);
-
-export default Card;
+export default connect(mapStateToProps, mapDispatchToProps)(Card);;

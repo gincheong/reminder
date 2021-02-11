@@ -17,7 +17,7 @@ class CardModal extends Component {
     this.saveTaskEvent = this.saveTaskEvent.bind(this);
     this.deleteTaskEvent = this.deleteTaskEvent.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.closeModalEvent = this.closeModalEvent.bind(this);
+    this.onAnimationEnd = this.onAnimationEnd.bind(this);
 
     this.modalRef = React.createRef();
     this.titleRef = React.createRef();
@@ -29,8 +29,8 @@ class CardModal extends Component {
   }
 
   shouldComponentUpdate (nextProps) {
-    const prev = this.props.cardmodal.taskReducer.task;
-    const next = nextProps.cardmodal.taskReducer.task;
+    const prev = this.props.taskReducer;
+    const next = nextProps.taskReducer;
     if (prev !== next) {
       this.setState({
         task: next,
@@ -42,7 +42,7 @@ class CardModal extends Component {
   render () {
     return (
       <div className="card-modal open-modal-animation" ref={this.modalRef}
-           onAnimationEnd={this.closeModalEvent}
+           onAnimationEnd={this.onAnimationEnd}
       >
         <div className="card-modal-header">
           <span className="card-modal-name">
@@ -69,7 +69,7 @@ class CardModal extends Component {
   // ! Rendering Delayed
   renderModal () {
     const { task } = this.state;
-    var { task_date } = task; 
+    let { task_date } = task;
     if (task_date) {
       task_date = task_date.substr(0, 10);
     } else {
@@ -132,7 +132,7 @@ class CardModal extends Component {
     this.modalRef.current.classList.add('close-modal-animation');
   }
 
-  closeModalEvent (event) {
+  onAnimationEnd (event) {
     if (event.animationName === 'close-modal') {
       this.props.toggleModal(undefined);
       this.props.refreshList();
@@ -143,7 +143,7 @@ class CardModal extends Component {
 
 let mapStateToProps = (state) => {
   return {
-    cardmodal: state
+    taskReducer: state.taskReducer.task
   }
 }
 
@@ -155,6 +155,4 @@ let mapDispatchToProps = (dispatch) => {
   }
 }
 
-CardModal = connect(mapStateToProps, mapDispatchToProps)(CardModal);
-
-export default CardModal;
+export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
