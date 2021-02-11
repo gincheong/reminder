@@ -5,11 +5,11 @@ import './Header.css';
 class Header extends Component {
   render () {
     return (
-      <div className="header">
+      <header className="header">
         <h1>
           Reminder
         </h1>
-      </div>
+      </header>
     )
   }
 }

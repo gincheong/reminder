@@ -14,15 +14,15 @@ class NewTaskInput extends Component {
 
   render () {
     return ( 
-      <div className="new-task">
-        <div className="new-task-button" onClick={this.addTaskToServer}>
+      <section className="new-task">
+        <button type="button" className="new-task-button" onClick={this.addTaskToServer}>
           <i className="fas fa-plus"></i>
-        </div>
+        </button>
         <input type="text" className="new-task-input"
           placeholder="add new task"
           onKeyPress={this.onKeyPressEvent}
           ref={this.inputRef} />
-      </div>
+      </section>
     )
   }
 
