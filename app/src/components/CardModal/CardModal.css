@@ -15,6 +15,7 @@
   animation-name: open-modal;
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 @keyframes open-modal {
@@ -30,6 +31,7 @@
   animation-name: close-modal;
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards; /* 마지막 프레임 유지 */
 }
 
 @keyframes close-modal {

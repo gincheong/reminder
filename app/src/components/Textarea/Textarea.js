@@ -1,36 +1,23 @@
-import React, { Component } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 import './Textarea.css';
 
-class Textarea extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      value: this.props.value ? this.props.value : ''
-    };
-    this.onChangeHandler = this.onChangeHandler.bind(this);
+const Textarea = forwardRef((props, ref) => {
+  const [value, setValue] = useState(props.value ? props.value : '');
 
-    this.textareaRef = React.createRef();
-  }
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
 
-  render () {
-    return (
-      <textarea value={this.state.value}
-                onChange={this.onChangeHandler}
-                className="card-modal-textarea"
-                rows={this.props.rows}
-                ref={this.textareaRef}
-                spellCheck="false"
-                placeholder="add descriptions"
-      />
-    );
-  }
-
-  onChangeHandler (e) {
-    this.setState({
-      value: e.target.value,
-    });
-  }
-}
+  return (
+    <textarea className="card-modal-textarea"
+              spellCheck="false" placeholder="add description"
+              rows={props.rows}
+              value={value}
+              onChange={onChange}
+              ref={ref}
+    />
+  );
+});;
 
 export default Textarea;
