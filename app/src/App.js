@@ -2,7 +2,7 @@ import { Card, Header } from './components';
 
 import './App.css';
 
-function App () {
+const App = () => {
   return (
     <main className="app">
       <Header />

@@ -1,62 +1,46 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { addTask } from '../../actions';
+import { addTask, fetchAllTask } from 'actions';
 import './NewTaskInput.css';
 
-class NewTaskInput extends Component {
-  constructor (props) {
-    super(props);
-    this.inputRef = React.createRef();
-    this.addTaskToServer = this.addTaskToServer.bind(this);
-    this.onKeyPressEvent = this.onKeyPressEvent.bind(this);
-  }
+const NewTaskInput = (props) => {
+  const dispatch = useDispatch();
+  const inputRef = useRef();
 
-  render () {
-    return ( 
-      <section className="new-task">
-        <button type="button" className="new-task-button" onClick={this.addTaskToServer}>
-          <i className="fas fa-plus"></i>
-        </button>
-        <input type="text" className="new-task-input"
-          placeholder="add new task"
-          onKeyPress={this.onKeyPressEvent}
-          ref={this.inputRef} />
-      </section>
-    )
-  }
+  function onAddNewTask() {
+    const $input = inputRef.current;
+    const title = $input.value.trim();
 
-  onKeyPressEvent (event) {
-    if (event.key === 'Enter') {
-      this.addTaskToServer();
-    }
-  }
-
-  addTaskToServer () {
-    const inputElement = this.inputRef.current;
-    const title = inputElement.value.trim();
-    if (title !== "") {
+    if (title !== '') {
       const data = {
         title: title,
-      }
-      inputElement.value = "";
-      
-      // ! 비동기처리 필요함
-      this.props.addTask(data).then(() => {
-        this.props.refreshList();
+      };
+      dispatch(addTask(data)).then(() => {
+        dispatch(fetchAllTask());
       });
-    } else {
-      inputElement.value = "";
+    }
+    $input.value = '';
+  };
+
+  function onPressEnter(event) {
+    if (event.key === 'Enter') {
+      onAddNewTask();
     }
   }
-}
 
-let mapDispatchToProps = (dispatch) => {
-  return {
-    addTask: (data) => dispatch(addTask(data)),
-  }
+  return (
+    <section className="new-task">
+      <button type="button" className="new-task-button" onClick={onAddNewTask}>
+        <i className="fas fa-plus"></i>
+      </button>
+      <input type="text" className="new-task-input"
+        placeholder="add new task"
+        onKeyPress={onPressEnter}
+        ref={inputRef}
+      />
+    </section>
+  );
 }
-
-NewTaskInput = connect(undefined, mapDispatchToProps)(NewTaskInput);
 
 export default NewTaskInput;

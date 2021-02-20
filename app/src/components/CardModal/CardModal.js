@@ -1,158 +1,129 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchOneTask, deleteTask, updateTask } from '../../actions';
-import { ModalButton, Input, Textarea } from '../../components';
+import { fetchAllTask, deleteTask, updateTask } from 'actions';
+import { ModalButton, Input, Textarea } from 'components';
 import './CardModal.css';
 
-class CardModal extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      task: {}
+// ! 닫기 애니메이션 하면서 렌더링이 여러번 됨
+const CardModal = (props) => {
+  const store = useSelector(store => store.taskReducer);
+  const dispatch = useDispatch();
+
+  const modalRef = useRef();
+  const titleRef = useRef();
+  const taskDateRef = useRef();
+  const alarmRef = useRef();
+  const descriptionRef = useRef();
+
+  useEffect(() => {
+    const onEscKeyup = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
     };
 
-    this.props.fetchOneTask(this.props.id);
-    
-    this.saveTaskEvent = this.saveTaskEvent.bind(this);
-    this.deleteTaskEvent = this.deleteTaskEvent.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.onAnimationEnd = this.onAnimationEnd.bind(this);
+    // mount
+    document.addEventListener('keyup', onEscKeyup);
+    return () => {
+      // unmount
+      document.removeEventListener('keyup', onEscKeyup);
+    };
+  }, []);
 
-    this.modalRef = React.createRef();
-    this.titleRef = React.createRef();
-    this.task_dateRef = React.createRef();
-    this.alarmRef = React.createRef();
-    this.descriptionRef = React.createRef();
+  
 
-    this.deleteButtonRef = React.createRef();
-  }
-
-  shouldComponentUpdate (nextProps) {
-    const prev = this.props.taskReducer;
-    const next = nextProps.taskReducer;
-    if (prev !== next) {
-      this.setState({
-        task: next,
-      });
-    }
-    return true; 
-  }
-
-  render () {
-    return (
-      <section className="card-modal open-modal-animation" ref={this.modalRef}
-           onAnimationEnd={this.onAnimationEnd}
-      >
-        <header className="card-modal-header">
-          <span className="card-modal-name">
-            Task Description
-          </span>
-        </header>
-        {this.props.id !== undefined ? this.renderModal() : undefined}
-
-        <footer className="card-modal-footer">
-          <ModalButton onDoubleClick={this.saveTaskEvent} animationname="modal-button-save">
-            <i className="fas fa-save"></i>            
-          </ModalButton>
-          <ModalButton onDoubleClick={this.deleteTaskEvent} animationname="modal-button-delete">
-            <i className="fas fa-trash-alt"></i>
-          </ModalButton>
-          <ModalButton onClick={this.closeModal}>
-            <i className="fas fa-times"></i>
-          </ModalButton>
-        </footer>
-      </section>
-    )
-  }
-   
-  // ! Rendering Delayed
-  renderModal () {
-    const { task } = this.state;
-    let { task_date } = task;
+  const renderModal = () => {
+    let { task_date } = store.task;
     if (task_date) {
       task_date = task_date.substr(0, 10);
-    } else {
-      task_date = undefined;
     }
-    
+
     return (
-      <main key={task.id} className="card-modal-content">
+      <main className="card-modal-content">
         <div className="card-modal-title">
           <i className="fas fa-list"></i>
-          <Input type="text" value={task.title} name="title" ref={this.titleRef} clearButton notNull
-                 placeholder="Title Must be Filled" />
+          <Input type="text" value={store.task.title} name="title" ref={titleRef}
+            clearButton notNull placeholder="Title Must be Filled" />
         </div>
         <div className="card-modal-date">
           <i className="fas fa-calendar"></i>
-          <Input type="date" value={task_date} name="task_date" ref={this.task_dateRef} clearButton />
+          <Input type="date" value={task_date} name="task_date" ref={taskDateRef}
+            clearButton />
         </div>
         <div className="card-modal-alarm">
           <i className="fas fa-bell"></i>
-          <Input type="datetime-local" value={task.alarm} name="alarm" ref={this.alarmRef} clearButton />
+          <Input type="datetime-local" value={store.task.alram} name="alarm" ref={alarmRef}
+            clearButton />
         </div>
         <div className="card-modal-description">
           <i className="fas fa-ellipsis-v"></i>
-          <Textarea value={task.description} rows='10' ref={this.descriptionRef} />
-          {/* // TODO: 이벤트 동일하게 적용하기, 크기조절 없애기, 스크롤 자동으로 늘어나게 하기 */}
+          <Textarea value={store.task.description} rows='10' ref={descriptionRef} />
         </div>
       </main>
-    )
+    );
   }
 
-  saveTaskEvent () {
-    // TODO: Action 만들기
-    const title = this.titleRef.current.state.value;
-    if (!title) {
-      return;
+  const onAnimationEnd = (event) => {
+    if (event.animationName === 'close-modal') {
+      props.toggleModal(undefined);
+      dispatch(fetchAllTask());
     }
+  }
 
-    const task_date = this.task_dateRef.current.state.value;
-    const alarm = this.alarmRef.current.state.value;
-    const description = this.descriptionRef.current.state.value;
+  const onSave = () => {
+    // TOOD: Action 만들기?
+    const title = titleRef.current.value;
+    if (!title) { return; }
 
+    const task_date = taskDateRef.current.value;
+    const alarm = alarmRef.current.value
+    const description = descriptionRef.current.value;
     const data = new FormData();
     data.append('title', title);
     data.append('task_date', task_date);
     data.append('alarm', alarm);
     data.append('description', description);
 
-    this.props.updateTask(this.props.id, data).then(() => {
-      this.closeModal();
+    dispatch(updateTask(props.id, data)).then(() => {
+      onClose();
     });
   }
 
-  deleteTaskEvent () {
-    this.props.deleteTask(this.props.id).then(() => {
-      this.closeModal();
+  const onDelete = () => {
+    dispatch(deleteTask(props.id)).then(() => {
+      onClose();
     });
   }
-
-  closeModal () {
-    this.modalRef.current.classList.add('close-modal-animation');
+  
+  const onClose = () => {
+    modalRef.current.classList.add('close-modal-animation');
   }
 
-  onAnimationEnd (event) {
-    if (event.animationName === 'close-modal') {
-      this.props.toggleModal(undefined);
-      this.props.refreshList();
-    }
-  }
+  return (
+    <section className="card-modal open-modal-animation" ref={modalRef}
+      onAnimationEnd={onAnimationEnd}
+    >
+      <header className="card-modal-header">
+        <span className="card-modal-name">
+          Task Description
+        </span>
+      </header>
+      {props.id !== undefined ? renderModal() : undefined}
+      <footer className="card-modal-footer">
+        <ModalButton onDoubleClick={onSave} animationname="modal-button-save">
+          <i className="fas fa-save"></i>
+        </ModalButton>
+        <ModalButton onDoubleClick={onDelete} animationname="modal-button-delete">
+          <i className="fas fa-trash-alt"></i>
+        </ModalButton>
+        <ModalButton onClick={onClose}>
+          <i className="fas fa-times"></i>
+        </ModalButton>
+      </footer>
+    </section>
+  );
+};
 
-}
-
-let mapStateToProps = (state) => {
-  return {
-    taskReducer: state.taskReducer.task
-  }
-}
-
-let mapDispatchToProps = (dispatch) => {
-  return {
-    fetchOneTask: (id) => dispatch(fetchOneTask(id)),
-    deleteTask: (id) => dispatch(deleteTask(id)),
-    updateTask: (id, data) => dispatch(updateTask(id, data)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CardModal);
+export default CardModal;
+  

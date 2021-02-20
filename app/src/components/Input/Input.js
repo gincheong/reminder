@@ -1,57 +1,43 @@
-import React, { Component } from 'react';
+import React, { useState, forwardRef } from 'react';
 
 import './Input.css';
 
-class Input extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      value: this.props.value ? this.props.value : ''
-    }
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.clearEvent = this.clearEvent.bind(this);
+const Input = forwardRef((props, ref) => {
+  const [value, setValue] = useState(props.value ? props.value : '');
 
-    this.inputRef = React.createRef();
-  }
-
-  render () {
-    return (
-      <>
-        <input type={this.props.type}
-              value={this.state.value}
-              onChange={this.onChangeHandler}
-              className="card-modal-input"
-              placeholder={this.props.placeholder}
-              spellCheck="false"
-              ref={this.inputRef}
-        />
-        {this.props.clearButton ? (
-          <div className="card-modal-input-clear" onClick={this.clearEvent}>
-            <i className="fas fa-eraser"></i>
-          </div>
-        ) : undefined }
-      </>
-    )
-  }
-
-  onChangeHandler (e) {
-    this.setState({
-      value: e.target.value
-    });
-
-    if (this.props.notNull && !e.target.value) {
-      this.inputRef.current.style.outline = '1px solid #db706c';
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    
+    if (props.notNull && !event.target.value) {
+      ref.current.style.outline = '1px solid #db706c';
     } else {
-      this.inputRef.current.style.outline = '';
+      if (ref.current.style.outline !== '') {
+        ref.current.style.outline = '';
+      }
     }
   }
 
-  clearEvent (e) {
-    this.setState({
-      value: ''
-    });
+  const onClickClear = () => {
+    setValue('');
   }
 
-}
+  return (
+    <>
+      <input type={props.type}
+            value={value}
+            onChange={onChangeInput}
+            className="card-modal-input"
+            placeholder={props.placeholder}
+            spellCheck="false"
+            ref={ref}
+      />
+      {props.clearButton ? (
+        <div className="card-modal-input-clear" onClick={onClickClear}>
+          <i className="fas fa-eraser"></i>
+        </div>
+      ) : ''}
+    </>
+  );
+});
 
 export default Input;
