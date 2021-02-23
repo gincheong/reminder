@@ -1,4 +1,4 @@
-import { Task_Types as TYPE } from '../actions';
+import { TASK_TYPES as TYPE } from '../actions';
 
 const initialState = {
   task_list: [],
