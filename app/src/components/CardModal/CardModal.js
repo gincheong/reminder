@@ -31,8 +31,6 @@ const CardModal = (props) => {
     };
   }, []);
 
-  
-
   const renderModal = () => {
     let { task_date } = store.task;
     if (task_date) {
@@ -58,7 +56,7 @@ const CardModal = (props) => {
         </div>
         <div className="card-modal-description">
           <i className="fas fa-ellipsis-v"></i>
-          <Textarea value={store.task.description} rows='10' ref={descriptionRef} />
+          <Textarea value={store.task.description} rows='10' name="description" ref={descriptionRef} />
         </div>
       </main>
     );
@@ -75,7 +73,6 @@ const CardModal = (props) => {
     // TOOD: Action 만들기?
     const title = titleRef.current.value;
     if (!title) { return; }
-
     const task_date = taskDateRef.current.value;
     const alarm = alarmRef.current.value
     const description = descriptionRef.current.value;
