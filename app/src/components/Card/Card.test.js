@@ -1,0 +1,79 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { mount } from 'enzyme';
+import axios from 'axios';
+import { waitFor } from '@testing-library/react';
+import store from '../../store';
+import { Card } from 'components';
+import { default as testData } from 'test/testData';
+
+const wrapping = (component) => {
+  return (
+    <Provider store={store}>
+      {component}
+    </Provider>
+  );
+};
+
+// ? axios.get Mocking을 여기 작성해도 적용 안 되는 이유가?
+
+describe('<Card />', () => {
+  it('CardModal should not be rendered', () => {
+    const wrapper = mount(wrapping(<Card />));
+    expect(wrapper.find('.card-modal-content').length).toBe(0); 
+  });
+
+  it('render task list', async () => {  
+    axios.get = jest.fn().mockImplementation(url => {
+      return new Promise(resolve => {
+        switch (url) {
+          case '/api/reminder/task/':
+            resolve({ data: testData });
+            break;
+          case '/api/reminder/task/72/':
+            resolve({ data: testData[0] });
+            break;
+        }
+      });
+    });
+    
+    const wrapper = mount(wrapping(<Card />));
+    await waitFor(() => {
+      wrapper.findWhere(
+        node => node.text() === '더미 데이터 1번' && node.hasClass('task-title')
+        );
+      }); // * default timeout is 1000ms
+    
+    expect(wrapper.text().includes('더미 데이터 2번')).toBe(true);
+  });
+});
+
+describe('<CardModal /> within <Card />', () => {
+  it('Open CardModal with click', async () => {
+    axios.get = jest.fn().mockImplementation(url => {
+      return new Promise(resolve => {
+        switch (url) {
+          case '/api/reminder/task/':
+            resolve({ data: testData });
+            break;
+          case '/api/reminder/task/72/':
+            resolve({ data: testData[0] });
+            break;
+        }
+      });
+    });
+
+    const wrapper = mount(wrapping(<Card />));
+    await waitFor(() => {
+      wrapper.findWhere(
+        node => node.text() === '더미 데이터 1번' && node.hasClass('task-title')
+      ).simulate('click');
+    });
+    wrapper.update();
+    
+    expect(wrapper.exists('.card-modal')).toBe(true);
+  });
+
+  // TODO: close 버튼 닫기 테스트
+  // 애니메이션 감지? 가 필요함
+});

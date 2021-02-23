@@ -13,78 +13,80 @@ export const Types = {
 };
 
 export function fetchAllTask () {
-  return dispatch => {
+  return async dispatch => {
     // TODO : add more type
     //  dispatch(waiting)
-    return axios.get(TASK_URL)
-      .then(response => {
-        dispatch({
-          type: Types.READ_ALL,
-          payload: response
-        })
-      }
-      //.catch
-    )
+    try {
+      const response = await axios.get(`${TASK_URL}`);
+      dispatch({
+        type: Types.READ_ALL,
+        payload: response
+      });
+    } catch (err) { 
+      console.error(err);
+    }
     // dispatch(complete)
 
   }
 }
 
 export function fetchOneTask (id = "") {
-  return dispatch => {
-    return axios.get(TASK_URL + id + '/')
-      .then(response => {
-        dispatch({
-          type: Types.READ,
-          payload: response
-        })
-      }
-    )
+  return async dispatch => {
+    try {
+      const response = await axios.get(`${TASK_URL}${id}/`);
+      dispatch({
+        type: Types.READ,
+        payload: response
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 
 export function addTask (data) {
-  return dispatch => {
-    return axios.post(TASK_URL, data)
-      .then(response => {
-        dispatch({
-          type: Types.CREATE,
-          payload: response
-        })
-      }
-    )
+  return async dispatch => {
+    try {
+      const response = await axios.post(`${TASK_URL}`, data);
+      dispatch({
+        type: Types.CREATE,
+        payload: response
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 
 export function deleteTask (id) {
-  return dispatch => {
-    return axios.delete(TASK_URL + id)
-      .then(response => {
-        dispatch({
-          type: Types.DELETE,
-          payload: response
-        })
-      }
-    )
+  return async dispatch => {
+    try {
+      const response = await axios.delete(`${TASK_URL}${id}/`);
+      dispatch({
+        type: Types.DELETE,
+        payload: response
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 
 export function updateTask (id, data) {
-  return dispatch => {
+  return async dispatch => {
     // TODO: pending일 때 스피너 추가?
     dispatch({ type: Types.UPDATE_PENDING });
-    return axios.put(TASK_URL + id + '/', data)
-    .then(response => {
+    try {
+      const response = await axios.put(`${TASK_URL}${id}/`, data);
       dispatch({
         type: Types.UPDATE_SUCCESS,
         payload: response
-      })
-    })
-    .catch(error => {
+      });
+    } catch (error) {
       dispatch({
         type: Types.UPDATE_FAILURE,
         payload: error
-      })
-    })
+      });
+    }
   }
 }

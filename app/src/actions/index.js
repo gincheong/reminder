@@ -1,4 +1,4 @@
-export { Types as Task_Types,
+export { Types as TASK_TYPES,
   fetchAllTask,
   fetchOneTask,
   addTask,
