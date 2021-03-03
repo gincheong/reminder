@@ -24,7 +24,7 @@ const Card = () => {
 
     return task_list.map(each => {
       if (each.alarm) {
-        each.alarm = each.alarm.replace('T', '').substr(0, 16);
+        each.alarm = each.alarm.replace('T', ' ').substr(0, 16);
       }
       const task_date = new Date(each.task_date);
 
@@ -35,18 +35,22 @@ const Card = () => {
               {each.title}
             </div>
             <div className="task-summary">
-              { !each.task_date ? undefined
-                : (
-                  <>
-                    <i className="fas fa-calendar"></i>
-                    { task_date < todayDate ? (
-                      <span className="font-red">{each.task_date}</span>
-                      ) : (
-                      <span>{each.task_date}</span>
-                      )
-                    }
-                  </>
-                )
+              { each.task_date !== null &&
+                <>
+                  <i className="fas fa-calendar"></i>
+                  { task_date < todayDate ? (
+                    <span className="font-red">{each.task_date}</span>
+                    ) : (
+                    <span>{each.task_date}</span>
+                    )
+                  }
+                </>
+              }
+              { each.alarm !== null &&
+                <>
+                 <i className="fas fa-bell"></i>
+                 <span>{each.alarm}</span>
+                </>
               }
             </div>
           </div>

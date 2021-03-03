@@ -51,7 +51,7 @@ const CardModal = (props) => {
         </div>
         <div className="card-modal-alarm">
           <i className="fas fa-bell"></i>
-          <Input type="datetime-local" value={store.task.alram} name="alarm" ref={alarmRef}
+          <Input type="datetime-local" value={store.task.alarm} name="alarm" ref={alarmRef}
             clearButton />
         </div>
         <div className="card-modal-description">
