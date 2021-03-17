@@ -5,7 +5,6 @@ import { fetchAllTask, deleteTask, updateTask } from 'actions';
 import { ModalButton, Input, Textarea } from 'components';
 import './CardModal.css';
 
-// ! 닫기 애니메이션 하면서 렌더링이 여러번 됨
 const CardModal = (props) => {
   const store = useSelector(store => store.taskReducer);
   const dispatch = useDispatch();
