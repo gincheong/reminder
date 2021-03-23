@@ -1,54 +1,41 @@
-.card {
-  padding-bottom: 4em;
-}
-
-.task-card {
+.Card {
   box-shadow: 0.2em 0.2em 0.4em black;
   /* x, y, blur, color */
-
   padding: 0.5em;
 
   background-color: #3e3e3e;
   text-align: left;
-}
 
-.task-card-header {
+
   cursor: pointer;
   border: 0.8em solid #3e3e3e;
 
   color: #f2f2f2;
   transition: color 0.3s ease-out;
 }
-.task-card-header:hover {
+.Card:hover {
   color: #fcf695;
   transition: color 0.3s ease-out;
 }
 
-.task-title {
+.CardTitle {
   font-size: 1.3em;
   font-weight: bold;
 }
 
-.task-summary {
+.CardSummary {
   margin-top: 0.5em;
   font-size: 0.9em;
   color: #cccccc;
 }
-
-.task-summary > * {
+.CardSummary > * {
   margin: 0em 0.3em;
-}
-
-.toggle {
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-}
-
-.task-detail {
-  padding: 0.8em;
 }
 
 .font-red {
   color: #db706c;
+}
+
+.font-orange {
+  color: #f3aa51;
 }
