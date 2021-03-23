@@ -2,20 +2,29 @@
   box-shadow: 0.2em 0.2em 0.4em black;
   /* x, y, blur, color */
   padding: 0.5em;
-
-  background-color: #3e3e3e;
   text-align: left;
-
-
-  cursor: pointer;
+  
   border: 0.8em solid #3e3e3e;
-
   color: #f2f2f2;
+  background-color: #3e3e3e;
+
   transition: color 0.3s ease-out;
+
+  display: flex;
 }
 .Card:hover {
   color: #fcf695;
   transition: color 0.3s ease-out;
+}
+
+.CardCheckBox {
+  margin: 0.5em 0.5em 0.5em 0em;
+  zoom: 1.4;
+}
+
+.CardInfo {
+  flex: 1;
+  cursor: pointer;
 }
 
 .CardTitle {

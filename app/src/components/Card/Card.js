@@ -1,26 +1,27 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 import './Card.css';
 
 const Card = (props) => {
-  const store = useSelector(store => store.taskReducer);
+  const current = new Date();
+  const todayDate = new Date(Date.UTC(current.getFullYear(), current.getMonth(), current.getDate()));
+  const task_date = new Date(props.data.task_date);
 
-  return store.task_list.map((each) => {
-    const current = new Date();
-    const todayDate = new Date(Date.UTC(current.getFullYear(), current.getMonth(), current.getDate()));
-    const task_date = new Date(each.task_date);
-    if (each.alarm) {
-      each.alarm = each.alarm.replace('T', ' ').substr(0, 16);
-    }
+  const onChangeHandler = (event) => {
+    console.log(event.target);
+  };
 
-    return (
-      <article key={each.id} className="Card" onClick={() => props.toggleModal(each.id)}>
+  return (
+    <article className="Card">
+      <div className="CardCheckBox">
+        <input type="checkbox" defaultChecked={ props.data.completed } onChange={ onChangeHandler } />
+      </div>
+      <div className="CardInfo" onClick={() => props.toggleModal(props.data.id)}>
         <header className="CardTitle">
-          { each.title }
+          { props.data.title }
         </header>
         <section className="CardSummary">
-          { each.task_date &&
+          { props.data.task_date &&
             <>
               <i className="fas fa-calendar"></i>
               <span className={
@@ -28,22 +29,22 @@ const Card = (props) => {
                   "font-orange"
                 : task_date < todayDate ?
                   "font-red"
-                :
+                : 
                   ""
               }
-              >{ each.task_date }</span>
+              >{ props.data.task_date }</span>
             </>
           }
-          { each.alarm &&
+          { props.data.alarm &&
             <>
               <i className="fas fa-bell"></i>
-              <span>{ each.alarm }</span>
+              <span>{ props.data.alarm.replace('T', ' ').substr(0, 16) }</span>
             </>
           }
         </section>
-      </article>
-    );  
-  });
+      </div>
+    </article>
+  );
 };
 
 export default Card;

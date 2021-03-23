@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchAllTask, fetchOneTask } from 'actions';
 import { CardModal, NewTaskInput, Card } from 'components';
@@ -7,6 +7,7 @@ import './CardContainer.css';
 
 const CardContainer = () => {
   const [selectedCard, setSelectedCard] = useState(undefined);
+  const store = useSelector(store => store.taskReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,7 +16,6 @@ const CardContainer = () => {
   }, []);
 
   const toggleModal = (id) => {
-    console.log(id);
     dispatch(fetchOneTask(id)).then(() => {
       setSelectedCard(id);
     });
@@ -24,7 +24,12 @@ const CardContainer = () => {
   return (
     <>
       <section className="CardContainer">
-        <Card toggleModal={toggleModal} />
+        { store.task_list.map((each) => {
+            return (
+              <Card key={each.id} data={each} toggleModal={toggleModal} />
+            );
+          })
+        }
       </section>
       <NewTaskInput refreshList={fetchAllTask} />
       { selectedCard &&
