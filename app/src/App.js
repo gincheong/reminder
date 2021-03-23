@@ -1,4 +1,4 @@
-import { Card, Header } from './components';
+import { CardContainer, Header } from './components';
 
 import './App.css';
 
@@ -6,7 +6,7 @@ const App = () => {
   return (
     <main className="app">
       <Header />
-      <Card />
+      <CardContainer />
     </main>
   );
 }
