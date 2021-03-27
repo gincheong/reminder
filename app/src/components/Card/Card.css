@@ -17,9 +17,16 @@
   transition: color 0.3s ease-out;
 }
 
+.Completed {
+  text-decoration: line-through;
+}
+
 .CardCheckBox {
   margin: 0.5em 0.5em 0.5em 0em;
   zoom: 1.4;
+}
+.CardCheckBox > input[type="checkbox"] {
+  cursor: pointer;
 }
 
 .CardInfo {

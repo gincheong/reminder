@@ -12,7 +12,6 @@ const CardContainer = () => {
 
   useEffect(() => {
     dispatch(fetchAllTask());
-    // eslint-disable-next-line
   }, []);
 
   const toggleModal = (id) => {
@@ -25,15 +24,25 @@ const CardContainer = () => {
     <>
       <section className="CardContainer">
         { store.task_list.map((each) => {
-            return (
-              <Card key={each.id} data={each} toggleModal={toggleModal} />
-            );
+            if (!each.completed) {
+              return (
+                <Card key={each.id} data={each} toggleModal={toggleModal} />
+              );
+            }
+          })
+        }
+        { store.task_list.map((each) => {
+            if (each.completed) {
+              return (
+                <Card key={each.id} data={each} toggleModal={toggleModal} />
+              );
+            }
           })
         }
       </section>
-      <NewTaskInput refreshList={fetchAllTask} />
+      <NewTaskInput />
       { selectedCard &&
-        <CardModal id={selectedCard} toggleModal={toggleModal} refreshList={fetchAllTask} />
+        <CardModal id={selectedCard} toggleModal={toggleModal} />
       }
     </>
   );

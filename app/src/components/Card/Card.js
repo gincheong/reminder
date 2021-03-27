@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { fetchAllTask, updateTask } from 'actions';
 import './Card.css';
 
 const Card = (props) => {
+  const dispatch = useDispatch();
+  const cardRef = useRef();
+  
   const current = new Date();
   const todayDate = new Date(Date.UTC(current.getFullYear(), current.getMonth(), current.getDate()));
   const task_date = new Date(props.data.task_date);
 
   const onChangeHandler = (event) => {
-    console.log(event.target);
+    event.target.checked = event.target.checked ? true : false;
+    
+    const data = new FormData();
+    data.append('title', props.data.title);
+    data.append('completed', event.target.checked);
+    dispatch(updateTask(props.data.id, data)).then(() => {
+      dispatch(fetchAllTask());
+    });
+    cardRef.current.classList.toggle('Completed');
   };
 
   return (
-    <article className="Card">
+    <article className={
+      props.data.completed ? 
+        "Card Completed"
+      :
+        "Card"
+    } ref={cardRef}>
       <div className="CardCheckBox">
         <input type="checkbox" defaultChecked={ props.data.completed } onChange={ onChangeHandler } />
       </div>
