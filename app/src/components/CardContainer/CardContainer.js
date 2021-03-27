@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchAllTask, fetchOneTask } from 'actions';
-import { CardModal, NewTaskInput, Card } from 'components';
+import { CardModal, NewTaskInput } from 'components';
+import { CompletedSection } from './CompletedSection/CompletedSection';
+import { InProgressSection } from './InProgressSection/InProgressSection';
 import './CardContainer.css';
 
 const CardContainer = () => {
@@ -23,22 +25,8 @@ const CardContainer = () => {
   return (
     <>
       <section className="CardContainer">
-        { store.task_list.map((each) => {
-            if (!each.completed) {
-              return (
-                <Card key={each.id} data={each} toggleModal={toggleModal} />
-              );
-            }
-          })
-        }
-        { store.task_list.map((each) => {
-            if (each.completed) {
-              return (
-                <Card key={each.id} data={each} toggleModal={toggleModal} />
-              );
-            }
-          })
-        }
+        <InProgressSection task={store.task_list} toggleModal={toggleModal} />
+        <CompletedSection task={store.task_list} toggleModal={toggleModal} />
       </section>
       <NewTaskInput />
       { selectedCard &&
