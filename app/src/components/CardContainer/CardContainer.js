@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchAllTask, fetchOneTask } from 'actions';
-import { CardModal, NewTaskInput, Card } from 'components';
+import { CardModal, NewTaskInput } from 'components';
+import { CardSection } from './CardSection/CardSection';
 import './CardContainer.css';
 
 const CardContainer = () => {
   const [selectedCard, setSelectedCard] = useState(undefined);
   const store = useSelector(store => store.taskReducer);
   const dispatch = useDispatch();
+
+  const inProgressTasks = store.task_list.filter(each => !each.completed);
+  const completedTasks = store.task_list.filter(each => each.completed);
 
   useEffect(() => {
     dispatch(fetchAllTask());
@@ -23,22 +27,8 @@ const CardContainer = () => {
   return (
     <>
       <section className="CardContainer">
-        { store.task_list.map((each) => {
-            if (!each.completed) {
-              return (
-                <Card key={each.id} data={each} toggleModal={toggleModal} />
-              );
-            }
-          })
-        }
-        { store.task_list.map((each) => {
-            if (each.completed) {
-              return (
-                <Card key={each.id} data={each} toggleModal={toggleModal} />
-              );
-            }
-          })
-        }
+        <CardSection title="In Progress" task={inProgressTasks} toggleModal={toggleModal} />
+        <CardSection title="Completed" task={completedTasks} toggleModal={toggleModal} />
       </section>
       <NewTaskInput />
       { selectedCard &&
