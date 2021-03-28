@@ -12,10 +12,6 @@
 
   display: flex;
 }
-.Card:hover {
-  color: #fcf695;
-  transition: color 0.3s ease-out;
-}
 
 .Completed {
   text-decoration: line-through;
@@ -24,14 +20,20 @@
 .CardCheckBox {
   margin: 0.5em 0.5em 0.5em 0em;
   zoom: 1.4;
-}
-.CardCheckBox > input[type="checkbox"] {
-  cursor: pointer;
+
+  & > input[type="checkbox"] {
+    cursor: pointer;
+  }
 }
 
 .CardInfo {
   flex: 1;
   cursor: pointer;
+
+  &:hover {
+    color: #fcf695;
+    transition: color 0.3s ease-out;
+  }
 }
 
 .CardTitle {
@@ -43,9 +45,10 @@
   margin-top: 0.5em;
   font-size: 0.9em;
   color: #cccccc;
-}
-.CardSummary > * {
-  margin: 0em 0.3em;
+
+  & > * {
+    margin: 0em 0.3em;
+  }
 }
 
 .font-red {

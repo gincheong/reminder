@@ -10,10 +10,11 @@
   background-color: #2e2e2e;
 
   -webkit-tap-highlight-color: transparent;
-}
-.modal-button:focus {
-  outline: none;
-  /* disable orange outline when button clicked */
+
+  &:focus {
+    outline: none;
+    /* disable orange outline when button clicked */
+  }
 }
 
 .modal-button-save {

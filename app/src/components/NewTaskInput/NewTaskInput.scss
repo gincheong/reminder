@@ -39,7 +39,8 @@
   line-height: 1em;
 
   box-sizing: border-box;
-}
-.new-task-input:focus {
-  outline: none;
+
+  :focus {
+    outline: none;
+  }
 }

@@ -62,16 +62,16 @@
   line-height: 3.5em;
   border-bottom: 1px solid #777777;
   padding: 0em 1em;
+
+  & > .fas {
+    margin-right: 1em;
+    font-size: 1.2em;
+  }
 }
 
 input::-webkit-calendar-picker-indicator {
   filter: invert(1); 
   /* change input[date] calendar picker color */
-}
-
-.card-modal-content > div > .fas {
-  margin-right: 1em;
-  font-size: 1.2em;
 }
 
 .card-modal-description {
