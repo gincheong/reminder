@@ -1,8 +1,9 @@
-.CompletedSection {
+.CardSection {
   background-color: #282828;
+  box-shadow: 0em -0.1em 0.2em #111111;
 }
 
-.CompletedHeader {
+.CardSectionHeader {
   padding: 0.5em;
 
   font-weight: bold;
