@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllTask, fetchOneTask } from 'actions';
 import { CardModal, NewTaskInput } from 'components';
 import { CardSection } from './CardSection/CardSection';
-import './CardContainer.css';
+import './CardContainer.scss';
 
 const CardContainer = () => {
   const [selectedCard, setSelectedCard] = useState(undefined);

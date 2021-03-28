@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addTask, fetchAllTask } from 'actions';
-import './NewTaskInput.css';
+import './NewTaskInput.scss';
 
 const NewTaskInput = (props) => {
   const dispatch = useDispatch();

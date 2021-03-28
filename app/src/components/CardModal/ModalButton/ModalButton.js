@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import './ModalButton.css';
+import './ModalButton.scss';
 
 const ModalButton = (props) => {
   const buttonRef = useRef();

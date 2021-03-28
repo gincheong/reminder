@@ -1,6 +1,6 @@
 import { CardContainer, Header } from './components';
 
-import './App.css';
+import './App.scss';
 
 const App = () => {
   return (

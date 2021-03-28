@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchAllTask, deleteTask, updateTask } from 'actions';
 import { ModalButton, Input, Textarea } from 'components';
-import './CardModal.css';
+import './CardModal.scss';
 
 const CardModal = (props) => {
   const store = useSelector(store => store.taskReducer);

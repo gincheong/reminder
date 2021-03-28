@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { fetchAllTask, updateTask } from 'actions';
-import './Card.css';
+import './Card.scss';
 
 const Card = (props) => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 
-import './Textarea.css';
+import './Textarea.scss';
 
 const Textarea = forwardRef((props, ref) => {
   const [value, setValue] = useState(props.value ? props.value : '');

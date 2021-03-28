@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 
-import './Input.css';
+import './Input.scss';
 
 const Input = forwardRef((props, ref) => {
   const [value, setValue] = useState(props.value ? props.value : '');

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Card } from 'components';
-import './CardSection.css';
+import './CardSection.scss';
 
 export const CardSection = (props) => {
   return (
