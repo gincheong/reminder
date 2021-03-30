@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { fetchAllTask, updateTask } from 'actions';
+import { deleteTask, fetchAllTask, updateTask } from 'actions';
+import { DeleteIcon } from './DeleteIcon/DeleteIcon';
 import './Card.scss';
 
 const Card = (props) => {
@@ -24,6 +25,13 @@ const Card = (props) => {
     cardRef.current.classList.toggle('Completed');
   };
 
+  const deleteCard = () => {
+    
+    // dispatch(deleteTask(props.data.id)).then(() => {
+    //   dispatch(fetchAllTask());
+    // });
+  };
+
   return (
     <article className={
       props.data.completed ? 
@@ -32,7 +40,7 @@ const Card = (props) => {
         "Card"
     } ref={cardRef}>
       <div className="CardCheckBox">
-        <input type="checkbox" defaultChecked={ props.data.completed } onChange={ onChangeHandler } />
+        <input type="checkbox" defaultChecked={props.data.completed} onChange={onChangeHandler} />
       </div>
       <div className="CardInfo" onClick={() => props.toggleModal(props.data.id)}>
         <header className="CardTitle">
@@ -56,11 +64,14 @@ const Card = (props) => {
           { props.data.alarm &&
             <>
               <i className="fas fa-bell"></i>
-              <span>{ props.data.alarm.replace('T', ' ').substr(0, 16) }</span>
+              <span>{props.data.alarm.replace('T', ' ').substr(0, 16)}</span>
             </>
           }
         </section>
       </div>
+      { props.data.completed &&
+        <DeleteIcon id={props.data.id} />
+      }
     </article>
   );
 };
