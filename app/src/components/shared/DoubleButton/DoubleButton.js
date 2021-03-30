@@ -1,8 +1,15 @@
 import React, { useRef } from 'react';
 
-import './ModalButton.scss';
+import './DoubleButton.scss';
 
-const ModalButton = (props) => {
+/** props
+ * @param {function} action 버튼이 실행시킬 함수
+ * @param {string} color 2번째 버튼의 컬러코드
+ * @param {jsx} beforeClick 기본 버튼의 템플릿
+ * @param {jsx} afterClick 2번째 버튼의 템플릿
+ * @returns {jsx} jsx
+ */
+const DoubleButton = (props) => {
   const beforeClickRef = useRef();
   const afterClickRef = useRef();
 
@@ -21,7 +28,7 @@ const ModalButton = (props) => {
   };
 
   return (
-    <button type="button" className="ModalButton" onClick={onClick}
+    <button type="button" className="DoubleButton" onClick={onClick}
       onMouseLeave={onMouseLeave}>
       <div className="BeforeClick" ref={beforeClickRef}>
         {props.beforeClick}
@@ -34,4 +41,11 @@ const ModalButton = (props) => {
   );
 };
 
-export default ModalButton;
+export default DoubleButton;
+
+
+/**
+ * 
+ * ModalButton 쪽에도 DoubleButton 적용하기
+ * 
+ */

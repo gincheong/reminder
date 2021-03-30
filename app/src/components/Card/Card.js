@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { deleteTask, fetchAllTask, updateTask } from 'actions';
-import { DeleteIcon } from './DeleteIcon/DeleteIcon';
+import { DoubleButton } from 'components/shared';
+// import { DeleteIcon } from './DeleteIcon/DeleteIcon';
 import './Card.scss';
 
 const Card = (props) => {
@@ -26,10 +27,9 @@ const Card = (props) => {
   };
 
   const deleteCard = () => {
-    
-    // dispatch(deleteTask(props.data.id)).then(() => {
-    //   dispatch(fetchAllTask());
-    // });
+    dispatch(deleteTask(props.data.id)).then(() => {
+      dispatch(fetchAllTask());
+    });
   };
 
   return (
@@ -70,7 +70,10 @@ const Card = (props) => {
         </section>
       </div>
       { props.data.completed &&
-        <DeleteIcon id={props.data.id} />
+        <DoubleButton action={deleteCard} color="#d9598c" 
+          beforeClick={<i className="fas fa-minus"></i>}
+          afterClick={<i className="fas fa-trash-alt"></i>}
+        />
       }
     </article>
   );
