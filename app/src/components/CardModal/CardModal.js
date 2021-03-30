@@ -105,17 +105,20 @@ const CardModal = (props) => {
           Task Description
         </span>
       </header>
-      {props.id !== undefined ? renderModal() : undefined}
+      { props.id && renderModal() }
       <footer className="card-modal-footer">
-        <ModalButton onDoubleClick={onSave} animationname="modal-button-save">
-          <i className="fas fa-save"></i>
-        </ModalButton>
-        <ModalButton onDoubleClick={onDelete} animationname="modal-button-delete">
-          <i className="fas fa-trash-alt"></i>
-        </ModalButton>
-        <ModalButton onClick={onClose}>
-          <i className="fas fa-times"></i>
-        </ModalButton>
+        <ModalButton color="#567ace" action={onSave}
+          beforeClick={<i className="fas fa-check"></i>}
+          afterClick={<i className="fas fa-save"></i>}
+        />
+        <ModalButton color="#db706c" action={onDelete}
+          beforeClick={<i className="fas fa-times"></i>}
+          afterClick={<i className="fas fa-trash-alt"></i>}
+        />
+        <ModalButton color="#f2f2f2" action={onClose}
+          beforeClick={<i className="fas fa-window-minimize"></i>}
+          afterClick={<i className="fas fa-angle-double-left"></i>}
+        />
       </footer>
     </section>
   );

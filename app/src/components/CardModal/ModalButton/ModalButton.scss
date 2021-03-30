@@ -1,44 +1,39 @@
-.modal-button {
+.ModalButton {
+  position: relative;
   line-height: 0.5em;
   border: none;
   margin: 0.6em;
   padding: 0.4em;
   font-size: 1.5em;
-  
   color: #f2f2f2;
   cursor: pointer;
   background-color: #2e2e2e;
-
   -webkit-tap-highlight-color: transparent;
-
   &:focus {
     outline: none;
     /* disable orange outline when button clicked */
   }
-}
+  &.click {
+    transition: opacity 0.4s ease-out;
+    opacity: 0;    
+  }
 
-.modal-button-save {
-  animation-name: save;
-  animation-duration: 1.3s;
-  animation-timing-function: ease-in;
-}
+  & > .BeforeClick {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    &.click {
+      transition: opacity 0.4s ease-out;
+      opacity: 0;
+    }
+  }
 
-@keyframes save {
-  0% { color: inherit; }
-  15% { color: #567ace; }
-  85% { color: #567ace; }
-  100% { color: inherit; }
-}
-
-.modal-button-delete {
-  animation-name: delete;
-  animation-duration: 1.7s;
-  animation-timing-function: ease-in;
-}
-
-@keyframes delete {
-  0% { color: inherit; }
-  15% { color: #db706c; }
-  85% { color: #db706c; }
-  100% { color: inherit; }
+  & > .AfterClick {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0;    
+    &.click {
+      transition: opacity 0.4s ease-out;
+      opacity: 1;
+    }
+  }
 }
