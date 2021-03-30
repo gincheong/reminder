@@ -6,8 +6,6 @@ import './DeleteIcon.scss';
 
 export const DeleteIcon = (props) => {
   const dispatch = useDispatch();
-
-  const deleteIconRef = React.useRef();
   const iconRef = React.useRef();
   const textRef = React.useRef();
   
@@ -26,7 +24,7 @@ export const DeleteIcon = (props) => {
   };
 
   return (
-    <div className="DeleteIcon" onClick={onClick} ref={deleteIconRef}
+    <div className="DeleteIcon" onClick={onClick}
       onMouseLeave={onMouseLeave}>
       <div className="Icon" ref={iconRef}>
         <i className="fas fa-minus-circle"></i>
