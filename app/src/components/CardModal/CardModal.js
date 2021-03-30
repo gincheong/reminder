@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetchAllTask, deleteTask, updateTask } from 'actions';
-import { ModalButton, Input, Textarea } from 'components';
+import { Input, Textarea } from 'components';
+import { DoubleButton } from 'components/shared';
 import './CardModal.scss';
 
 const CardModal = (props) => {
@@ -107,15 +108,15 @@ const CardModal = (props) => {
       </header>
       { props.id && renderModal() }
       <footer className="card-modal-footer">
-        <ModalButton color="#567ace" action={onSave}
+        <DoubleButton color="#567ace" action={onSave}
           beforeClick={<i className="fas fa-check"></i>}
           afterClick={<i className="fas fa-save"></i>}
         />
-        <ModalButton color="#db706c" action={onDelete}
+        <DoubleButton color="#db706c" action={onDelete}
           beforeClick={<i className="fas fa-times"></i>}
           afterClick={<i className="fas fa-trash-alt"></i>}
         />
-        <ModalButton color="#f2f2f2" action={onClose}
+        <DoubleButton color="#f2f2f2" action={onClose}
           beforeClick={<i className="fas fa-window-minimize"></i>}
           afterClick={<i className="fas fa-angle-double-left"></i>}
         />

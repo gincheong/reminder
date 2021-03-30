@@ -1,20 +1,20 @@
-.ModalButton {
+.DoubleButton {
   position: relative;
   line-height: 0.5em;
   border: none;
-  margin: 0.6em;
-  padding: 0.4em;
+  margin: 0.5em;
+  padding: 0.5em;
   font-size: 1.5em;
   color: #f2f2f2;
   cursor: pointer;
-  background-color: #2e2e2e;
+  background-color: transparent;
   -webkit-tap-highlight-color: transparent;
   &:focus {
     outline: none;
     /* disable orange outline when button clicked */
   }
   &.click {
-    transition: opacity 0.4s ease-out;
+    transition: opacity 0.3s ease-out;
     opacity: 0;    
   }
 
@@ -22,7 +22,7 @@
     position: absolute;
     transform: translate(-50%, -50%);
     &.click {
-      transition: opacity 0.4s ease-out;
+      transition: opacity 0.3s ease-out;
       opacity: 0;
     }
   }
@@ -32,7 +32,7 @@
     transform: translate(-50%, -50%);
     opacity: 0;    
     &.click {
-      transition: opacity 0.4s ease-out;
+      transition: opacity 0.3s ease-out;
       opacity: 1;
     }
   }
