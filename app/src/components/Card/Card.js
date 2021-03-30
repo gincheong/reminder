@@ -71,7 +71,7 @@ const Card = (props) => {
       </div>
       { props.data.completed &&
         <DoubleButton action={deleteCard} color="#d9598c" 
-          beforeClick={<i className="fas fa-minus"></i>}
+          beforeClick={<i className="fas fa-times"></i>}
           afterClick={<i className="fas fa-trash-alt"></i>}
         />
       }
