@@ -52,9 +52,9 @@ const Card = (props) => {
               <i className="fas fa-calendar"></i>
               <span className={
                 task_date - todayDate === 0 ?
-                  "font-orange"
+                  "Orange"
                 : task_date < todayDate ?
-                  "font-red"
+                  "Red"
                 : 
                   ""
               }

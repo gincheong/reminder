@@ -3,58 +3,50 @@
   /* x, y, blur, color */
   padding: 0.5em 0.5em 0.5em 0em;
   text-align: left;
-  
   border: 0.8em solid #3e3e3e;
   color: #f2f2f2;
   background-color: #3e3e3e;
-
   transition: color 0.3s ease-out;
-
   display: flex;
-}
+  &.Completed {
+    text-decoration: line-through;
+  }
 
-.Completed {
-  text-decoration: line-through;
-}
+  & > .CardCheckBox {
+    margin: 0.5em 0.5em 0.5em 0em;
+    zoom: 1.4;
+    & > input[type="checkbox"] {
+      cursor: pointer;
+    }
+  }
 
-.CardCheckBox {
-  margin: 0.5em 0.5em 0.5em 0em;
-  zoom: 1.4;
-
-  & > input[type="checkbox"] {
+  & > .CardInfo {
+    flex: 1;
     cursor: pointer;
+    &:hover {
+      color: #fcf695;
+      transition: color 0.3s ease-out;
+    }
+    
+    & > .CardTitle {
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+
+    & > .CardSummary {
+      margin-top: 0.5em;
+      font-size: 0.9em;
+      color: #cccccc;
+      
+      & > * {
+        margin: 0em 0.3em;
+      }
+      & > Orange {
+        color: #f3aa51;
+      }
+      & > Red {
+        color: #db706c;
+      }
+    }
   }
-}
-
-.CardInfo {
-  flex: 1;
-  cursor: pointer;
-
-  &:hover {
-    color: #fcf695;
-    transition: color 0.3s ease-out;
-  }
-}
-
-.CardTitle {
-  font-size: 1.3em;
-  font-weight: bold;
-}
-
-.CardSummary {
-  margin-top: 0.5em;
-  font-size: 0.9em;
-  color: #cccccc;
-
-  & > * {
-    margin: 0em 0.3em;
-  }
-}
-
-.font-red {
-  color: #db706c;
-}
-
-.font-orange {
-  color: #f3aa51;
 }
