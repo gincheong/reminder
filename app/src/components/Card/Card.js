@@ -26,6 +26,39 @@ const Card = (props) => {
     cardRef.current.classList.toggle('Completed');
   };
 
+  // Card Drag Event
+  const onMouseDown = (event) => {
+    const startX = event.clientX;
+    
+    const onMouseMove = (event) => {
+      // 드래그에 따라 element 이동시킴
+      cardRef.current.style.left = event.clientX - startX + 'px';
+    };
+
+    const onMouseUp = (event) => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      
+      cardRef.current.style.left = 0; // should be removed
+
+      if (event.clientX === startX) {
+        props.toggleModal(props.data.id);
+      }
+
+      const moveDistance = event.clientX - startX;
+      if (cardRef.current.offsetWidth / 2 < moveDistance) {
+        
+        console.log('do something');
+      } else {
+        cardRef.current.style.left = 0;
+      }
+    };
+
+    // 마우스가 element를 벗어나는 경우를 위해 document에 이벤트리스너 등록
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  };
+
   const deleteCard = () => {
     dispatch(deleteTask(props.data.id)).then(() => {
       dispatch(fetchAllTask());
@@ -42,7 +75,7 @@ const Card = (props) => {
       <div className="CardCheckBox">
         <input type="checkbox" defaultChecked={props.data.completed} onChange={onChangeHandler} />
       </div>
-      <div className="CardInfo" onClick={() => props.toggleModal(props.data.id)}>
+      <div className="CardInfo" onMouseDown={onMouseDown}>
         <header className="CardTitle">
           { props.data.title }
         </header>
