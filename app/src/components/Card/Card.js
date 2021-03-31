@@ -23,7 +23,6 @@ const Card = (props) => {
     dispatch(updateTask(props.data.id, data)).then(() => {
       dispatch(fetchAllTask());
     });
-    cardRef.current.classList.toggle('Completed');
   };
 
   // Card Drag Event
@@ -39,16 +38,13 @@ const Card = (props) => {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
       
-      cardRef.current.style.left = 0; // should be removed
-
       if (event.clientX === startX) {
         props.toggleModal(props.data.id);
       }
 
-      const moveDistance = event.clientX - startX;
-      if (cardRef.current.offsetWidth / 2 < moveDistance) {
-        
-        console.log('do something');
+      const moveDistance = Math.abs(event.clientX - startX);
+      if (cardRef.current.offsetWidth / 2.7 < moveDistance) {
+        dragAnimation(event.clientX);        
       } else {
         cardRef.current.style.left = 0;
       }
@@ -57,6 +53,15 @@ const Card = (props) => {
     // 마우스가 element를 벗어나는 경우를 위해 document에 이벤트리스너 등록
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  };
+
+  const dragAnimation = () => {
+    if (parseInt(cardRef.current.style.left) < cardRef.current.offsetWidth) {
+      cardRef.current.style.left = parseInt(cardRef.current.style.left) + 50 + 'px'; // ?: 숫자 넣어도 되나
+      requestAnimationFrame(dragAnimation);
+    } else {
+      deleteCard();
+    }
   };
 
   const deleteCard = () => {
@@ -75,7 +80,9 @@ const Card = (props) => {
       <div className="CardCheckBox">
         <input type="checkbox" defaultChecked={props.data.completed} onChange={onChangeHandler} />
       </div>
-      <div className="CardInfo" onMouseDown={onMouseDown}>
+      <div className="CardInfo"
+        onMouseDown={props.data.completed ? onMouseDown : undefined}
+      >
         <header className="CardTitle">
           { props.data.title }
         </header>
@@ -102,12 +109,12 @@ const Card = (props) => {
           }
         </section>
       </div>
-      { props.data.completed &&
+      {/* { props.data.completed &&
         <DoubleButton action={deleteCard} color="#d9598c" 
           beforeClick={<i className="fas fa-times"></i>}
           afterClick={<i className="fas fa-trash-alt"></i>}
         />
-      }
+      } */}
     </article>
   );
 };
