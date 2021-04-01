@@ -15,7 +15,7 @@ const wrapping = (component) => {
   );
 };
 
-// ? axios.get Mocking을 여기 작성해도 적용 안 되는 이유가?
+// ?: axios.get Mocking을 여기 작성해도 적용 안 되는 이유가?
 
 describe('<Card />', () => {
   it('CardModal should not be rendered', () => {
