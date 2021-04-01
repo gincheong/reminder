@@ -25,21 +25,16 @@ const Card = (props) => {
       const moveDistance = event.clientX - startX;
       if (Math.abs(moveDistance) <= parseInt(cardRef.current.offsetWidth / dragRatio)) {
         cardRef.current.style.left = event.clientX - startX + 'px';
-        let [r, g, b] = '';
         if (moveDistance > 0) {
-          [r, g, b] = [
-            baseColor + moveDistance * 0.1,
-            baseColor + moveDistance * 0.1,
-            baseColor + moveDistance * 0.9,
-          ];
+          // something to be added?
         } else {
-          [r, g, b] = [
+          const [r, g, b] = [
             baseColor + Math.abs(moveDistance) * 0.9,
             baseColor + Math.abs(moveDistance) * 0.1,
             baseColor + Math.abs(moveDistance) * 0.1,
           ];
+          backgroundRef.current.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
         }
-        backgroundRef.current.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
       }
     };
 
