@@ -1,11 +1,11 @@
 .CardSection {
   box-shadow: 0em -0.1em 0.2em #111111;
-}
 
-.CardSectionHeader {
-  box-shadow: 0em 0.1em 0.2em #111111;
-  background-color: #282828;
-  padding: 0.5em;
-  font-weight: bold;
-  font-style: italic;
+  & > .CardSectionHeader {
+    box-shadow: 0em 0.1em 0.2em #111111;
+    background-color: #282828;
+    padding: 0.5em;
+    font-weight: bold;
+    font-style: italic;
+  }
 }
