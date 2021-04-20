@@ -14,17 +14,33 @@ const Card = (props) => {
   const task_date = new Date(props.data.task_date);
 
   const baseColor = 46;
+  const dragDistance = 100; // 동작 활성화시키는 최소 드래그 길이 (px)
+  const dragValue = 50; // 삭제 동작 시에, 자동으로 드래그될 속도 (px)
+
+  
   // Card Drag Event
   const onMouseDown = (event) => {
-    const dragRatio = 4; // 카드의 1/4 만큼 드래그하면 기능 작동
-    const startX = event.clientX;
+    let startX;
+    if (event.type === 'touchstart') {
+      startX = event.touches[0].clientX;
+    } else {
+      startX = event.clientX;
+    }
     
     // 드래그에 따라 element 이동시킴
+    let lastTouchClientX; // touchend에서 clientX 가져올 수 없음
     const onMouseMove = (event) => {
       // 드래그 시, 항목이 일정 이상 움직이지 않게 함
-      const moveDistance = event.clientX - startX;
-      if (Math.abs(moveDistance) <= parseInt(cardRef.current.offsetWidth / dragRatio)) {
-        cardRef.current.style.left = event.clientX - startX + 'px';
+      let clientX;
+      if (event.type === 'touchmove') {
+        clientX = event.touches[0].clientX;
+      } else {
+        clientX = event.clientX;
+      }
+      lastTouchClientX = clientX;
+      const moveDistance = clientX - startX;
+      if (Math.abs(moveDistance) <= dragDistance) {
+        cardRef.current.style.left = clientX - startX + 'px';
         if (moveDistance > 0) {
           // something to be added?
         } else {
@@ -42,14 +58,24 @@ const Card = (props) => {
       // 이벤트 중복등록 방지
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+
+      document.removeEventListener('touchmove', onMouseMove);
+      document.removeEventListener('touchend', onMouseUp);
       
       // 제자리 클릭 시 Modal 활성화
-      if (event.clientX === startX) {
+      let clientX;
+      if (event.type === 'touchend') {
+        clientX = lastTouchClientX;
+      } else {
+        clientX = event.clientX;
+      }
+
+      if (clientX === startX) {
         props.toggleModal(props.data.id);
       }
 
-      const moveDistance = event.clientX - startX;
-      if (cardRef.current.offsetWidth / dragRatio < Math.abs(moveDistance)) {
+      const moveDistance = clientX - startX;
+      if (dragDistance < Math.abs(moveDistance)) {
         if (moveDistance > 0) {
           // left to right
           toggleCompleted();
@@ -65,11 +91,12 @@ const Card = (props) => {
     // 마우스가 element를 벗어나는 경우를 위해 document에 이벤트리스너 등록
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+
+    document.addEventListener('touchmove', onMouseMove);
+    document.addEventListener('touchend', onMouseUp);
   };
 
   const dragAnimation = (callback) => {
-    const dragValue = 50;
-
     if (Math.abs(parseInt(cardRef.current.style.left)) < cardRef.current.offsetWidth) {
       // ?: 이렇게 고정 숫자로 이동시키는게 맞나
       cardRef.current.style.left = parseInt(cardRef.current.style.left) - dragValue + 'px';
@@ -101,7 +128,7 @@ const Card = (props) => {
       <div className="Background" ref={backgroundRef}>
       </div>
       <div className={"CardContent" + (props.data.completed ? " Completed" : '')} ref={cardRef}>
-        <div className="CardInfo" onMouseDown={onMouseDown}>
+        <div className="CardInfo" onMouseDown={onMouseDown} onTouchStart={onMouseDown}>
           <header className="CardTitle">
             { props.data.title }
           </header>
