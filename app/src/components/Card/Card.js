@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
+import propTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 import { deleteTask, fetchAllTask, updateTask } from 'actions';
@@ -10,13 +11,15 @@ const Card = (props) => {
   const backgroundRef = useRef();
   
   const current = new Date();
-  const todayDate = new Date(Date.UTC(current.getFullYear(), current.getMonth(), current.getDate()));
-  const task_date = new Date(props.data.task_date);
+  const todayDate = new Date(
+    Date.UTC(current.getFullYear(), current.getMonth(), current.getDate())
+  );
+  const task_date = new Date(props.data.get('task_date'));
 
-  const baseColor = 46;
-  const dragDistance = 100; // 동작 활성화시키는 최소 드래그 길이 (px)
-  const dragValue = 50; // 삭제 동작 시에, 자동으로 드래그될 속도 (px)
-
+  // ?: useMemo를 굳이 사용할 필요가 없는 부분? 괜한 메모리 낭비
+  const baseColor = useMemo(() => 46, []);
+  const dragDistance = useMemo(() => 100, []); // 동작 활성화시키는 최소 드래그 길이 (px)
+  const dragValue = useMemo(() => 50, []); // 삭제 동작 시에, 자동으로 드래그될 속도 (px)
   
   // Card Drag Event
   const onMouseDown = (event) => {
@@ -38,6 +41,7 @@ const Card = (props) => {
         clientX = event.clientX;
       }
       lastTouchClientX = clientX;
+      
       const moveDistance = clientX - startX;
       if (Math.abs(moveDistance) <= dragDistance) {
         cardRef.current.style.left = clientX - startX + 'px';
@@ -71,7 +75,7 @@ const Card = (props) => {
       }
 
       if (clientX === startX) {
-        props.toggleModal(props.data.id);
+        props.toggleModal(props.data.get('id'));
       }
 
       const moveDistance = clientX - startX;
@@ -110,15 +114,15 @@ const Card = (props) => {
     let completed = !cardRef.current.classList.contains('Completed');
     
     const data = new FormData();
-    data.append('title', props.data.title);
+    data.append('title', props.data.get('title'));
     data.append('completed', completed);
-    dispatch(updateTask(props.data.id, data)).then(() => {
+    dispatch(updateTask(props.data.get('id'), data)).then(() => {
       dispatch(fetchAllTask());
     });
   };
 
   const deleteCard = () => {
-    dispatch(deleteTask(props.data.id)).then(() => {
+    dispatch(deleteTask(props.data.get('id'))).then(() => {
       dispatch(fetchAllTask());
     });
   };
@@ -127,13 +131,13 @@ const Card = (props) => {
     <article className="Card">
       <div className="Background" ref={backgroundRef}>
       </div>
-      <div className={"CardContent" + (props.data.completed ? " Completed" : '')} ref={cardRef}>
+      <div className={"CardContent" + (props.data.get('completed') ? " Completed" : '')} ref={cardRef}>
         <div className="CardInfo" onMouseDown={onMouseDown} onTouchStart={onMouseDown}>
           <header className="CardTitle">
-            { props.data.title }
+            { props.data.get('title') }
           </header>
           <section className="CardSummary">
-            { props.data.task_date &&
+            { props.data.get('task_date') &&
               <>
                 <i className="fas fa-calendar"></i>
                 <span className={
@@ -144,10 +148,10 @@ const Card = (props) => {
                   : 
                     ""
                 }
-                >{ props.data.task_date }</span>
+                >{ props.data.get('task_date') }</span>
               </>
             }
-            { props.data.alarm &&
+            { props.data.get('alarm') &&
               <>
                 <i className="fas fa-bell"></i>
                 <span>{props.data.alarm.replace('T', ' ').substr(0, 16)}</span>
@@ -161,3 +165,17 @@ const Card = (props) => {
 };
 
 export default Card;
+
+Card.propTypes = {
+  data: propTypes.shape({
+    id: propTypes.number,
+    created_at: propTypes.string, // YYYY-MM-SST00:00:00.000000
+    updated_at: propTypes.string, // YYYY-MM-SST00:00:00.000000
+    title: propTypes.string,
+    description: propTypes.string,
+    task_date: propTypes.string | null, // YYYY-MM-DD
+    alarm: propTypes.string | null, // YYYY-MM-DDThh:mm:ss
+    completed: propTypes.bool
+  }),
+  toggleModal: propTypes.func
+};
