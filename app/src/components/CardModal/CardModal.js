@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import propTypes from 'prop-types';
 import { fetchAllTask, deleteTask, updateTask } from 'actions';
 import { Input, Textarea } from 'components';
 import { DoubleButton } from 'components/shared';
@@ -56,7 +56,7 @@ const CardModal = (props) => {
         </div>
         <div className="card-modal-description">
           <i className="fas fa-ellipsis-v"></i>
-          <Textarea value={task.description} rows='10' name="description" ref={descriptionRef} />
+          <Textarea value={task.description} rows={10} name="description" ref={descriptionRef} />
         </div>
       </main>
     );
@@ -126,4 +126,8 @@ const CardModal = (props) => {
 };
 
 export default CardModal;
-  
+
+CardModal.propTypes = {
+  id: propTypes.number,
+  toggleModal: propTypes.func
+};

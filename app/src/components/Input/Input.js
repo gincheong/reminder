@@ -1,5 +1,5 @@
-import React, { useState, forwardRef } from 'react';
-
+import React, { useState, forwardRef, useRef } from 'react';
+import propTypes from 'prop-types';
 import './Input.scss';
 
 const Input = forwardRef((props, ref) => {
@@ -41,3 +41,11 @@ const Input = forwardRef((props, ref) => {
 });
 
 export default Input;
+
+Input.propTypes = {
+  type: propTypes.string,
+  value: propTypes.string,
+  clearButton: propTypes.bool,
+  notNull: propTypes.bool,
+  placeholder: propTypes.string
+};
