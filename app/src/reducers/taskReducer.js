@@ -26,7 +26,7 @@ export function taskReducer(state = initialState, action) {
         .set('task_list', List(action.payload.data.map(each => Map(each))));
     case TYPE.READ:
       return state
-        .set('task', action.payload.data);
+        .set('task', Map(action.payload.data));
     case TYPE.CREATE:
       return state;
     case TYPE.DELETE:

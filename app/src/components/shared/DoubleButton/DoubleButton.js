@@ -37,7 +37,7 @@ const DoubleButton = (props) => {
 export default DoubleButton;
 
 DoubleButton.propTypes = {
-  function: propTypes.func, // 버튼에서 실행시킬 함수
+  action: propTypes.func, // 버튼에서 실행시킬 함수
   color: propTypes.string, // 2번째 버튼의 컬러코드
   beforeClick: propTypes.element, // 기본 상태의 버튼 jsx
   afterClick: propTypes.element // 1회 클릭 상태의 버튼 jsx

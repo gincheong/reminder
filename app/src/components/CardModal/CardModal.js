@@ -31,17 +31,13 @@ const CardModal = (props) => {
 
   const renderModal = () => {
     const task = store.get('task');
-
-    let { task_date } = task;
-    if (task_date) {
-      task_date = task_date.substr(0, 10);
-    }
+    const task_date = task.get('task_date')?.substr(0, 10) ?? '';
 
     return (
       <main className="card-modal-content">
         <div className="card-modal-title">
           <i className="fas fa-list"></i>
-          <Input type="text" value={task.title} name="title" ref={titleRef}
+          <Input type="text" value={task.get('title')} name="title" ref={titleRef}
             clearButton notNull placeholder="Title Must be Filled" />
         </div>
         <div className="card-modal-date">
@@ -51,12 +47,12 @@ const CardModal = (props) => {
         </div>
         <div className="card-modal-alarm">
           <i className="fas fa-bell"></i>
-          <Input type="datetime-local" value={task.alarm} name="alarm" ref={alarmRef}
+          <Input type="datetime-local" value={task.get('alarm')} name="alarm" ref={alarmRef}
             clearButton />
         </div>
         <div className="card-modal-description">
           <i className="fas fa-ellipsis-v"></i>
-          <Textarea value={task.description} rows={10} name="description" ref={descriptionRef} />
+          <Textarea value={task.get('description')} rows={10} name="description" ref={descriptionRef} />
         </div>
       </main>
     );
