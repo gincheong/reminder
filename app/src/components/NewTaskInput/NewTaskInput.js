@@ -1,17 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addTask, fetchAllTask } from 'actions';
 import './NewTaskInput.scss';
 
-const NewTaskInput = (props) => {
+const NewTaskInput = () => {
   const dispatch = useDispatch();
-  const inputRef = useRef();
 
-  function onAddNewTask() {
-    const $input = inputRef.current;
-    const title = $input.value.trim();
+  const [inputValue, setInputValue] = useState('');
 
+  const onAddNewTask = () => {
+    const title = inputValue.trim();
+    
     if (title !== '') {
       const data = {
         title: title,
@@ -20,14 +20,14 @@ const NewTaskInput = (props) => {
         dispatch(fetchAllTask());
       });
     }
-    $input.value = '';
+    setInputValue('');
   };
 
-  function onPressEnter(event) {
+  const onKeyDown = useCallback((event) => {
     if (event.key === 'Enter') {
       onAddNewTask();
     }
-  }
+  });
 
   return (
     <section className="new-task">
@@ -36,8 +36,9 @@ const NewTaskInput = (props) => {
       </button>
       <input type="text" className="new-task-input"
         placeholder="add new task"
-        onKeyPress={onPressEnter}
-        ref={inputRef}
+        onKeyDown={onKeyDown}
+        onChange={e => setInputValue(e.target.value)}        
+        value={inputValue}
       />
     </section>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import propTypes from 'prop-types';
 import { fetchAllTask, deleteTask, updateTask } from 'actions';
 import { Input, Textarea } from 'components';
 import { DoubleButton } from 'components/shared';
@@ -23,25 +23,21 @@ const CardModal = (props) => {
       }
     };
 
-    // mount
     document.addEventListener('keyup', onEscKeyup);
-    return () => {
-      // unmount
+    return () => { // when component dismount
       document.removeEventListener('keyup', onEscKeyup);
     };
   }, []);
 
   const renderModal = () => {
-    let { task_date } = store.task;
-    if (task_date) {
-      task_date = task_date.substr(0, 10);
-    }
+    const task = store.get('task');
+    const task_date = task.get('task_date')?.substr(0, 10) ?? '';
 
     return (
       <main className="card-modal-content">
         <div className="card-modal-title">
           <i className="fas fa-list"></i>
-          <Input type="text" value={store.task.title} name="title" ref={titleRef}
+          <Input type="text" value={task.get('title')} name="title" ref={titleRef}
             clearButton notNull placeholder="Title Must be Filled" />
         </div>
         <div className="card-modal-date">
@@ -51,12 +47,12 @@ const CardModal = (props) => {
         </div>
         <div className="card-modal-alarm">
           <i className="fas fa-bell"></i>
-          <Input type="datetime-local" value={store.task.alarm} name="alarm" ref={alarmRef}
+          <Input type="datetime-local" value={task.get('alarm')} name="alarm" ref={alarmRef}
             clearButton />
         </div>
         <div className="card-modal-description">
           <i className="fas fa-ellipsis-v"></i>
-          <Textarea value={store.task.description} rows='10' name="description" ref={descriptionRef} />
+          <Textarea value={task.get('description')} rows={10} name="description" ref={descriptionRef} />
         </div>
       </main>
     );
@@ -126,4 +122,8 @@ const CardModal = (props) => {
 };
 
 export default CardModal;
-  
+
+CardModal.propTypes = {
+  id: propTypes.number,
+  toggleModal: propTypes.func
+};

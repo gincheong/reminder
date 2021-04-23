@@ -1,34 +1,47 @@
+import { Map, List } from 'immutable';
 import { TASK_TYPES as TYPE } from '../actions';
 
-const initialState = {
-  task_list: [],
-  task: {},
+const initialState = Map({
+  task_list: List([
+    // {
+    //   id: 1,
+    //   created_at: "YYYY-MM-SST00:00:00.000000",
+    //   updated_at: "YYYY-MM-SST00:00:00.000000",
+    //   title: "task name",
+    //   description: "description about task",
+    //   task_date: "YYYY-MM-DD",
+    //   alarm: "YYYY-MM-DDThh:mm:ss" | null,
+    //   completed: true
+    // }
+  ]),
+  task: Map({}),
   pending: null,
-  error: false,
-  // ! unused key
-}
+  error: false // TODO: 에러 핸들링 필요
+});
 
 export function taskReducer(state = initialState, action) {
-  // * 현재 state에서, action을 받아 다음 state를 만들어 반환함
   switch (action.type) {
     case TYPE.READ_ALL:
-      return { ...state, task_list: action.payload.data };
+      return state
+        .set('task_list', List(action.payload.data.map(each => Map(each))));
     case TYPE.READ:
-      return { ...state, task: action.payload.data };
+      return state
+        .set('task', Map(action.payload.data));
     case TYPE.CREATE:
-      // TODO: error handling
-      return { ...state };
+      return state;
     case TYPE.DELETE:
-      // TODO: error handling
-      return { ...state };
+      return state;
 
     case TYPE.UPDATE_PENDING:
-      return { ...state, pending: true };
+      return state.set('pending', true);
     case TYPE.UPDATE_SUCCESS:
-      // TODO: error handling
-      return { ...state, pending: false, error: false };
+      return state
+        .set('pending', false)
+        .set('error', false);
     case TYPE.UPDATE_FAILURE:
-      return { ...state, pending: null, error: true };
+      return state
+        .set('pending', null)
+        .set('error', true);
     default:
       return state;
   }

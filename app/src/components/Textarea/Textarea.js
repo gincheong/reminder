@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react';
-
+import propTypes from 'prop-types';
 import './Textarea.scss';
 
 const Textarea = forwardRef((props, ref) => {
@@ -21,3 +21,8 @@ const Textarea = forwardRef((props, ref) => {
 });;
 
 export default Textarea;
+
+Textarea.propTypes = {
+  value: propTypes.string,
+  rows: propTypes.number
+};
